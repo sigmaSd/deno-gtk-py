@@ -26,6 +26,8 @@ export interface ApplicationWindowConstructor {
 }
 export interface ApplicationWindow {
   set_child: (widget: Widget) => void;
+  set_default_size: (width: number, height: number) => void;
+  set_title: (name: string) => void;
   present: () => void;
 }
 

@@ -20,6 +20,9 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#button = Gtk.Button(new NamedArgument("label", "Hello"));
     this.#box1.append(this.#button);
     this.#button.connect("clicked", this.hello);
+
+    this.set_default_size(600, 250);
+    this.set_title("MyApp");
   }
 
   hello = python.callback((_kwargs, _button: Button): undefined => {
