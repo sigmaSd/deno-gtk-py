@@ -3,7 +3,16 @@ import {
   NamedArgument,
   python,
 } from "https://deno.land/x/python@0.4.1/mod.ts";
-import type { Adw, Button, Gdk, Gtk, Scale, Switch } from "../mod.ts";
+import type {
+  Adw,
+  Button,
+  FileDialog,
+  Gdk,
+  Gio,
+  Gtk,
+  Scale,
+  Switch,
+} from "../mod.ts";
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
@@ -12,6 +21,7 @@ gi.require_version("Adw", "1");
 const Gtk: Gtk = python.import("gi.repository.Gtk");
 const Adw: Adw = python.import("gi.repository.Adw");
 const Gdk: Gdk = python.import("gi.repository.Gdk");
+const Gio: Gio = python.import("gi.repository.Gio");
 
 const css_provider = Gtk.CssProvider();
 css_provider.load_from_path("./examples/style.css");
@@ -33,6 +43,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   #slider;
   #header;
   #open_button;
+  #open_dialog;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -104,7 +115,43 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#open_button = Gtk.Button(kw`label=${"Open"}`);
     this.#header.pack_start(this.#open_button);
     this.#open_button.set_icon_name("document-open-symbolic");
+    this.#open_button.connect("clicked", this.show_open_dialog);
+
+    this.#open_dialog = Gtk.FileDialog.new();
+    this.#open_dialog.set_title("Select a File");
+
+    const f = Gtk.FileFilter();
+    f.set_name("Image files");
+    f.add_mime_type("image/jpeg");
+    f.add_mime_type("image/png");
+
+    const filters = Gio.ListStore.new(Gtk.FileFilter); // Create a ListStore with the type Gtk.FileFilter
+    filters.append(f); // Add the file filter to the ListStore. You could add more.
+
+    this.#open_dialog.set_filters(filters); // Set the filters for the open dialog
+    this.#open_dialog.set_default_filter(f);
   }
+
+  show_open_dialog = python.callback(
+    (_kwargs, _button: Button): undefined => {
+      this.#open_dialog.open(this, undefined, this.open_dialog_open_callback);
+    },
+  );
+
+  open_dialog_open_callback = python.callback(
+    (_kwargs, dialog: FileDialog, result): undefined => {
+      try {
+        const file = dialog.open_finish(result);
+        if (file !== undefined) {
+          console.log(`File path is ${file.get_path()}`);
+        }
+      } catch (error) {
+        if ("message" in error) {
+          console.error(`Error opening file: ${error.message}`);
+        }
+      }
+    },
+  );
 
   slider_changed = python.callback(
     (_kwargs, slider: Scale): undefined => {

@@ -5,6 +5,18 @@ import type {
   PythonConvertible,
 } from "https://deno.land/x/python@0.4.1/src/python.ts";
 
+export interface Gio {
+  ListStore: ListStore;
+}
+
+export interface ListStore {
+  //FIXME: Gio.ListStore.new(Gtk.FileFilter)
+  // takes a type instead of a value
+  // deno-lint-ignore no-explicit-any
+  new: (filter: any) => ListStore;
+  append(f: FileFilter): void;
+}
+
 export interface Gdk {
   Display: Display;
 }
@@ -19,10 +31,12 @@ export interface Adw {
 }
 
 export interface Gtk {
+  FileFilter(): FileFilter;
   STYLE_PROVIDER_PRIORITY_APPLICATION: number;
   StyleContext: StyleContext;
   CssProvider(): StyleProvider;
   ApplicationWindow: ApplicationWindowConstructor;
+  FileDialog: FileDialog;
   HeaderBar(): HeaderBar;
   Scale(): Scale;
   Label(kwArg: NamedArgument): Label;
@@ -101,6 +115,30 @@ export interface Label extends Widget {
 export interface Button extends Widget {
   set_icon_name(name: string): void;
   connect(event: "clicked", callback: Callback): void;
+}
+
+export interface FileDialog extends Widget {
+  set_default_filter(f: FileFilter): void;
+  set_filters(filters: ListStore): void;
+  // deno-lint-ignore no-explicit-any
+  open_finish(result: any): GFile;
+  open(
+    window: ApplicationWindow,
+    // deno-lint-ignore no-explicit-any
+    cancellable: any,
+    callback: Callback,
+  ): void;
+  new: () => FileDialog;
+  set_title(title: string): void;
+}
+
+export interface GFile {
+  get_path(): string;
+}
+
+export interface FileFilter {
+  set_name(name: string): void;
+  add_mime_type(type: "image/jpeg" | "image/png" | string): void;
 }
 
 export interface CheckButton extends Widget {
