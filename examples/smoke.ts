@@ -31,6 +31,8 @@ class MainWindow extends Gtk.ApplicationWindow {
   #switch;
   #label;
   #slider;
+  #header;
+  #open_button;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -95,6 +97,13 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#slider.set_value(5); // Sets the current value/position
     this.#slider.connect("value-changed", this.slider_changed);
     this.#box2.append(this.#slider);
+
+    this.#header = Gtk.HeaderBar();
+    this.set_titlebar(this.#header);
+
+    this.#open_button = Gtk.Button(kw`label=${"Open"}`);
+    this.#header.pack_start(this.#open_button);
+    this.#open_button.set_icon_name("document-open-symbolic");
   }
 
   slider_changed = python.callback(

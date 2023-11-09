@@ -23,6 +23,7 @@ export interface Gtk {
   StyleContext: StyleContext;
   CssProvider(): StyleProvider;
   ApplicationWindow: ApplicationWindowConstructor;
+  HeaderBar(): HeaderBar;
   Scale(): Scale;
   Label(kwArg: NamedArgument): Label;
   Switch(): Switch;
@@ -62,6 +63,7 @@ export interface ApplicationWindow {
   set_child: (widget: Widget) => void;
   set_default_size: (width: number, height: number) => void;
   set_title: (name: string) => void;
+  set_titlebar: (header: HeaderBar) => void;
   present: () => void;
   close: () => void;
 }
@@ -73,6 +75,10 @@ export interface Widget {
 export interface Box extends Widget {
   append(child: Widget): void;
   set_spacing(spacing: number): void;
+}
+
+export interface HeaderBar extends Widget {
+  pack_start(widget: Widget): void;
 }
 
 export interface Switch extends Widget {
@@ -93,6 +99,7 @@ export interface Label extends Widget {
 }
 
 export interface Button extends Widget {
+  set_icon_name(name: string): void;
   connect(event: "clicked", callback: Callback): void;
 }
 
