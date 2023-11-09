@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-empty-interface
 import type { NamedArgument } from "https://deno.land/x/python@0.4.1/mod.ts";
 import type {
   Callback,
@@ -13,6 +14,7 @@ export interface Gtk {
   ApplicationWindow: ApplicationWindowConstructor;
   Box: (kwArg: NamedArgument) => Box;
   Button: (kwArg: NamedArgument) => Button;
+  CheckButton(arg0: NamedArgument): CheckButton;
   Orientation: {
     HORIZONTAL: PythonConvertible;
     VERTICAL: PythonConvertible;
@@ -35,9 +37,9 @@ export interface ApplicationWindow {
   set_default_size: (width: number, height: number) => void;
   set_title: (name: string) => void;
   present: () => void;
+  close: () => void;
 }
 
-// deno-lint-ignore no-empty-interface
 export interface Widget {
 }
 
@@ -47,4 +49,8 @@ export interface Box extends Widget {
 
 export interface Button extends Widget {
   connect(event: "clicked", hello: Callback): void;
+}
+
+export interface CheckButton extends Widget {
+  get_active(): boolean;
 }

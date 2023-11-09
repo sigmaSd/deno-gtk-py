@@ -13,6 +13,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   #button;
   #box2;
   #box3;
+  #check;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -36,10 +37,19 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#box1.append(this.#box3);
 
     this.#box2.append(this.#button);
+
+    this.#check = Gtk.CheckButton(new NamedArgument("label", "And goodbye?"));
+    this.#box2.append(this.#check);
   }
 
   hello = python.callback((_kwargs, _button: Button): undefined => {
     console.log("hello");
+    // FIXME: the obvious way didn't work
+    // deno-python have asBoolean but I can't acces it
+    if (this.#check.get_active().toString() === "True") {
+      console.log("Goodbye world!");
+      this.close();
+    }
   });
 }
 
