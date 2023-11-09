@@ -1,5 +1,8 @@
-import { type NamedArgument } from "https://deno.land/x/python@0.4.1/mod.ts";
-import { type Callback } from "https://deno.land/x/python@0.4.1/src/python.ts";
+import type { NamedArgument } from "https://deno.land/x/python@0.4.1/mod.ts";
+import type {
+  Callback,
+  PythonConvertible,
+} from "https://deno.land/x/python@0.4.1/src/python.ts";
 
 export interface Adw {
   Application: ApplicationConstructor;
@@ -10,7 +13,10 @@ export interface Gtk {
   ApplicationWindow: ApplicationWindowConstructor;
   Box: (kwArg: NamedArgument) => Box;
   Button: (kwArg: NamedArgument) => Button;
-  Orientation: { VERTICAL: never };
+  Orientation: {
+    HORIZONTAL: PythonConvertible;
+    VERTICAL: PythonConvertible;
+  };
 }
 
 export interface ApplicationConstructor {

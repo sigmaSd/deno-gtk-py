@@ -11,18 +11,31 @@ const Adw: Adw = python.import("gi.repository.Adw");
 class MainWindow extends Gtk.ApplicationWindow {
   #box1;
   #button;
+  #box2;
+  #box3;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
-    this.#box1 = Gtk.Box(
-      new NamedArgument("orientation", Gtk.Orientation.VERTICAL),
-    );
-    this.set_child(this.#box1);
-    this.#button = Gtk.Button(new NamedArgument("label", "Hello"));
-    this.#box1.append(this.#button);
-    this.#button.connect("clicked", this.hello);
-
     this.set_default_size(600, 250);
     this.set_title("MyApp");
+
+    this.#box1 = Gtk.Box(
+      new NamedArgument("orientation", Gtk.Orientation.HORIZONTAL),
+    );
+    this.#box2 = Gtk.Box(
+      new NamedArgument("orientation", Gtk.Orientation.VERTICAL),
+    );
+    this.#box3 = Gtk.Box(
+      new NamedArgument("orientation", Gtk.Orientation.VERTICAL),
+    );
+
+    this.#button = Gtk.Button(new NamedArgument("label", "Hello"));
+    this.#button.connect("clicked", this.hello);
+
+    this.set_child(this.#box1);
+    this.#box1.append(this.#box2);
+    this.#box1.append(this.#box3);
+
+    this.#box2.append(this.#button);
   }
 
   hello = python.callback((_kwargs, _button: Button): undefined => {
