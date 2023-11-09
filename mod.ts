@@ -5,12 +5,23 @@ import type {
   PythonConvertible,
 } from "https://deno.land/x/python@0.4.1/src/python.ts";
 
+export interface Gdk {
+  Display: Display;
+}
+
+export interface Display {
+  get_default(): Display;
+}
+
 export interface Adw {
   Application: ApplicationConstructor;
   run: () => void;
 }
 
 export interface Gtk {
+  STYLE_PROVIDER_PRIORITY_APPLICATION: number;
+  StyleContext: StyleContext;
+  CssProvider(): StyleProvider;
   ApplicationWindow: ApplicationWindowConstructor;
   Label(kwArg: NamedArgument): Label;
   Switch(): Switch;
@@ -21,6 +32,18 @@ export interface Gtk {
     HORIZONTAL: PythonConvertible;
     VERTICAL: PythonConvertible;
   };
+}
+
+export interface StyleContext {
+  add_provider_for_display(
+    display: Display,
+    provider: StyleProvider,
+    proiority: number,
+  ): unknown;
+}
+
+export interface StyleProvider {
+  load_from_path(path: string): void;
 }
 
 export interface ApplicationConstructor {
@@ -43,6 +66,7 @@ export interface ApplicationWindow {
 }
 
 export interface Widget {
+  set_css_classes(classes: string[]): void;
 }
 
 export interface Box extends Widget {

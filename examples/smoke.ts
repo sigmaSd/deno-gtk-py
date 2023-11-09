@@ -3,7 +3,7 @@ import {
   NamedArgument,
   python,
 } from "https://deno.land/x/python@0.4.1/mod.ts";
-import type { Adw, Button, Gtk, Switch } from "../mod.ts";
+import type { Adw, Button, Gdk, Gtk, Switch } from "../mod.ts";
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
@@ -11,6 +11,15 @@ gi.require_version("Adw", "1");
 
 const Gtk: Gtk = python.import("gi.repository.Gtk");
 const Adw: Adw = python.import("gi.repository.Adw");
+const Gdk: Gdk = python.import("gi.repository.Gdk");
+
+const css_provider = Gtk.CssProvider();
+css_provider.load_from_path("./examples/style.css");
+Gtk.StyleContext.add_provider_for_display(
+  Gdk.Display.get_default(),
+  css_provider,
+  Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+);
 
 class MainWindow extends Gtk.ApplicationWindow {
   #box1;
@@ -75,6 +84,8 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#label = Gtk.Label(kw`label=${"A switch"}`);
     this.#switch_box.append(this.#label);
     this.#switch_box.set_spacing(5);
+
+    this.#label.set_css_classes(["title"]);
   }
 
   switch_switched = python.callback(
