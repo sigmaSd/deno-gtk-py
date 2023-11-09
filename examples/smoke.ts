@@ -3,7 +3,7 @@ import {
   NamedArgument,
   python,
 } from "https://deno.land/x/python@0.4.1/mod.ts";
-import type { Adw, Button, Gdk, Gtk, Switch } from "../mod.ts";
+import type { Adw, Button, Gdk, Gtk, Scale, Switch } from "../mod.ts";
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
@@ -30,6 +30,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   #switch_box;
   #switch;
   #label;
+  #slider;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -86,7 +87,24 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#switch_box.set_spacing(5);
 
     this.#label.set_css_classes(["title"]);
+
+    this.#slider = Gtk.Scale();
+    this.#slider.set_digits(0); // Number of decimal places to use
+    this.#slider.set_range(0, 10);
+    this.#slider.set_draw_value(true); // Show a label with current value
+    this.#slider.set_value(5); // Sets the current value/position
+    this.#slider.connect("value-changed", this.slider_changed);
+    this.#box2.append(this.#slider);
   }
+
+  slider_changed = python.callback(
+    (_kwargs, slider: Scale): undefined => {
+      console.log(slider.get_value());
+      //FIXME typeof slider.get_value() is not a number
+      //FIXME changing the slider many times creates an error:
+      //TypeError: 'builtin_function_or_method' object does not support vectorcall
+    },
+  );
 
   switch_switched = python.callback(
     (_kwargs, _switch: Switch, state): undefined => {

@@ -23,6 +23,7 @@ export interface Gtk {
   StyleContext: StyleContext;
   CssProvider(): StyleProvider;
   ApplicationWindow: ApplicationWindowConstructor;
+  Scale(): Scale;
   Label(kwArg: NamedArgument): Label;
   Switch(): Switch;
   Box: (kwArg: NamedArgument) => Box;
@@ -77,6 +78,15 @@ export interface Box extends Widget {
 export interface Switch extends Widget {
   set_active(state: boolean): void;
   connect(event: "state-set", callback: Callback): void;
+}
+
+export interface Scale extends Widget {
+  connect(signal: "value-changed", callback: Callback): void;
+  set_value(value: number): void;
+  set_draw_value(show: boolean): void;
+  set_range(start: number, end: number): void;
+  set_digits(digits: number): void;
+  get_value(): number;
 }
 
 export interface Label extends Widget {
