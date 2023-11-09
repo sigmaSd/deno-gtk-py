@@ -5,11 +5,13 @@ import {
   python,
 } from "https://deno.land/x/python@0.4.1/mod.ts";
 import type {
+  AboutDialog,
   Adw,
   Button,
   FileDialog,
   Gdk,
   Gio,
+  GLib,
   Gtk,
   Scale,
   SimpleAction,
@@ -24,6 +26,7 @@ const Gtk: Gtk = python.import("gi.repository.Gtk");
 const Adw: Adw = python.import("gi.repository.Adw");
 const Gdk: Gdk = python.import("gi.repository.Gdk");
 const Gio: Gio = python.import("gi.repository.Gio");
+const GLib: GLib = python.import("gi.repository.GLib");
 
 const css_provider = Gtk.CssProvider();
 css_provider.load_from_path("./examples/style.css");
@@ -48,6 +51,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   #open_dialog;
   #popover;
   #hamburger;
+  #about: AboutDialog | undefined;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -135,11 +139,13 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#open_dialog.set_filters(filters); // Set the filters for the open dialog
     this.#open_dialog.set_default_filter(f);
 
-    // Create a new "Action"
-    const action = Gio.SimpleAction.new("something", undefined);
-    action.connect("activate", this.print_something);
-    this.add_action(action); // Here the action is being added to the window, but you could add it to the
-    // application or an "ActionGroup"
+    {
+      // Create a new "Action"
+      const action = Gio.SimpleAction.new("something", undefined);
+      action.connect("activate", this.print_something);
+      this.add_action(action); // Here the action is being added to the window, but you could add it to the
+      // application or an "ActionGroup"
+    }
 
     // Create a new menu, containing that action
     const menu = Gio.Menu.new();
@@ -157,7 +163,59 @@ class MainWindow extends Gtk.ApplicationWindow {
 
     // Add menu button to the header bar
     this.#header.pack_start(this.#hamburger);
+
+    // Set app name
+    GLib.set_application_name("My App");
+
+    {
+      // Create an action to run a *show about dialog* function we will create
+      const action = Gio.SimpleAction.new("about");
+      action.connect("activate", this.show_about);
+      this.add_action(action);
+    }
+
+    menu.append("About", "win.about"); // Add it to the menu we created in previous section
   }
+
+  show_about = python.callback(
+    (_kwargs, _action: SimpleAction, _param): undefined => {
+      // this.#about = Gtk.AboutDialog();
+      // this.#about.set_transient_for(this); // Makes the dialog always appear in from of the parent window
+      // this.#about.set_modal(this); // Makes the parent window unresponsive while dialog is showing
+
+      // this.#about.set_authors(["Your Name"]);
+      // this.#about.set_copyright("Copyright 2022 Your Full Name");
+      // this.#about.set_license_type(Gtk.License.GPL_3_0);
+      // this.#about.set_website("http://example.com");
+      // this.#about.set_website_label("My Website");
+      // this.#about.set_version("1.0");
+      // this.#about.set_logo_icon_name("org.example.example"); // The icon will need to be added to appropriate location
+      // // E.g. /usr/share/icons/hicolor/scalable/apps/org.example.example.svg
+
+      // this.#about.set_visible(true);
+
+      const dialog = Adw.AboutWindow(
+        new NamedArgument("transient_for", app.get_active_window()),
+      );
+      dialog.set_application_name("App name");
+      dialog.set_version("1.0");
+      dialog.set_developer_name("Developer");
+      //@ts-ignore: FIXME: License is used as a function *and* as a type
+      dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0));
+      dialog.set_comments("Adw about Window example");
+      dialog.set_website("https://github.com/Tailko2k/GTK4PythonTutorial");
+      dialog.set_issue_url(
+        "https://github.com/Tailko2k/GTK4PythonTutorial/issues",
+      );
+      dialog.add_credit_section("Contributors", ["Name1 url"]);
+      dialog.set_translator_credits("Name1 url");
+      dialog.set_copyright("© 2022 developer");
+      dialog.set_developers(["Developer"]);
+      dialog.set_application_name("com.github.devname.appname"); // icon must be uploaded in ~/.local/share/icons or /usr/share/icons
+
+      dialog.set_visible(true);
+    },
+  );
 
   print_something = python.callback(
     (_kwargs, _action: SimpleAction, _param): undefined => {
