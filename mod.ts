@@ -12,6 +12,7 @@ export interface Adw {
 
 export interface Gtk {
   ApplicationWindow: ApplicationWindowConstructor;
+  Switch(): Switch;
   Box: (kwArg: NamedArgument) => Box;
   Button: (kwArg: NamedArgument) => Button;
   CheckButton(arg0: NamedArgument): CheckButton;
@@ -47,8 +48,13 @@ export interface Box extends Widget {
   append(child: Widget): void;
 }
 
+export interface Switch extends Widget {
+  set_active(state: boolean): void;
+  connect(event: "state-set", callback: Callback): void;
+}
+
 export interface Button extends Widget {
-  connect(event: "clicked", hello: Callback): void;
+  connect(event: "clicked", callback: Callback): void;
 }
 
 export interface CheckButton extends Widget {

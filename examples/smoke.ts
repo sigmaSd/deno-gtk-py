@@ -1,9 +1,5 @@
-import {
-  kw,
-  NamedArgument,
-  python,
-} from "https://deno.land/x/python@0.4.1/mod.ts";
-import type { Adw, Button, Gtk } from "../mod.ts";
+import { NamedArgument, python } from "https://deno.land/x/python@0.4.1/mod.ts";
+import type { Adw, Button, Gtk, Switch } from "../mod.ts";
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
@@ -18,6 +14,8 @@ class MainWindow extends Gtk.ApplicationWindow {
   #box2;
   #box3;
   #check;
+  #switch_box;
+  #switch;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -57,11 +55,28 @@ class MainWindow extends Gtk.ApplicationWindow {
     // this.#box2.append(radio1);
     // this.#box2.append(radio2);
     // this.#box2.append(radio3);
+
+    this.#switch_box = Gtk.Box(
+      new NamedArgument("orientation", Gtk.Orientation.HORIZONTAL),
+    );
+
+    this.#switch = Gtk.Switch();
+    this.#switch.set_active(true);
+    this.#switch.connect("state-set", this.switch_switched);
+
+    this.#switch_box.append(this.#switch);
+    this.#box2.append(this.#switch_box);
   }
 
-  radio_toggled = python.callback((_kwargs): undefined => {
-    console.log("toggle!");
-  });
+  switch_switched = python.callback(
+    (_kwargs, _switch: Switch, state): undefined => {
+      console.log(`The switch has been switched ${state ? "on" : "off"}`);
+    },
+  );
+
+  // radio_toggled = python.callback((_kwargs): undefined => {
+  //   console.log("toggle!");
+  // });
 
   hello = python.callback((_kwargs, _button: Button): undefined => {
     console.log("hello");
