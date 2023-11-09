@@ -52,6 +52,8 @@ class MainWindow extends Gtk.ApplicationWindow {
     // radio2.set_group(radio1);
     // radio3.set_group(radio1);
     // radio1.connect("toggled", this.radio_toggled);
+    // // you can pass extra arguments like so
+    // // radio1.connect("toggled", self.radio_toggled, "test")
     // this.#box2.append(radio1);
     // this.#box2.append(radio2);
     // this.#box2.append(radio3);
