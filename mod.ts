@@ -24,7 +24,7 @@ export interface Gtk {
 export interface ApplicationConstructor {
   new (kwArg: NamedArgument): Application;
 }
-export interface Application {
+export interface Application extends Widget {
   //FIXME: args type
   run: (args: string[]) => void;
   connect: (signal: "activate", callback: Callback) => void;
@@ -53,4 +53,6 @@ export interface Button extends Widget {
 
 export interface CheckButton extends Widget {
   get_active(): boolean;
+  set_group(group: CheckButton): void;
+  connect: (signal: "toggled", callback: Callback) => void;
 }

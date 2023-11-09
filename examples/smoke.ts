@@ -1,4 +1,8 @@
-import { NamedArgument, python } from "https://deno.land/x/python@0.4.1/mod.ts";
+import {
+  kw,
+  NamedArgument,
+  python,
+} from "https://deno.land/x/python@0.4.1/mod.ts";
 import type { Adw, Button, Gtk } from "../mod.ts";
 
 const gi = python.import("gi");
@@ -40,7 +44,22 @@ class MainWindow extends Gtk.ApplicationWindow {
 
     this.#check = Gtk.CheckButton(new NamedArgument("label", "And goodbye?"));
     this.#box2.append(this.#check);
+
+    // Extra Tip: Radio Buttons
+    // const radio1 = Gtk.CheckButton(kw`label = ${"test"}`);
+    // const radio2 = Gtk.CheckButton(kw`label = ${"test"}`);
+    // const radio3 = Gtk.CheckButton(kw`label = ${"test"}`);
+    // radio2.set_group(radio1);
+    // radio3.set_group(radio1);
+    // radio1.connect("toggled", this.radio_toggled);
+    // this.#box2.append(radio1);
+    // this.#box2.append(radio2);
+    // this.#box2.append(radio3);
   }
+
+  radio_toggled = python.callback((_kwargs): undefined => {
+    console.log("toggle!");
+  });
 
   hello = python.callback((_kwargs, _button: Button): undefined => {
     console.log("hello");
