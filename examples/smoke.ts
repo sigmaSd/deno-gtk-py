@@ -1,4 +1,8 @@
-import { NamedArgument, python } from "https://deno.land/x/python@0.4.1/mod.ts";
+import {
+  kw,
+  NamedArgument,
+  python,
+} from "https://deno.land/x/python@0.4.1/mod.ts";
 import type { Adw, Button, Gtk, Switch } from "../mod.ts";
 
 const gi = python.import("gi");
@@ -16,6 +20,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   #check;
   #switch_box;
   #switch;
+  #label;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -66,6 +71,10 @@ class MainWindow extends Gtk.ApplicationWindow {
 
     this.#switch_box.append(this.#switch);
     this.#box2.append(this.#switch_box);
+
+    this.#label = Gtk.Label(kw`label=${"A switch"}`);
+    this.#switch_box.append(this.#label);
+    this.#switch_box.set_spacing(5);
   }
 
   switch_switched = python.callback(

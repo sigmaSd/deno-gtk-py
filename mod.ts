@@ -12,6 +12,7 @@ export interface Adw {
 
 export interface Gtk {
   ApplicationWindow: ApplicationWindowConstructor;
+  Label(kwArg: NamedArgument): Label;
   Switch(): Switch;
   Box: (kwArg: NamedArgument) => Box;
   Button: (kwArg: NamedArgument) => Button;
@@ -46,11 +47,15 @@ export interface Widget {
 
 export interface Box extends Widget {
   append(child: Widget): void;
+  set_spacing(spacing: number): void;
 }
 
 export interface Switch extends Widget {
   set_active(state: boolean): void;
   connect(event: "state-set", callback: Callback): void;
+}
+
+export interface Label extends Widget {
 }
 
 export interface Button extends Widget {
