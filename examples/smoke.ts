@@ -11,6 +11,7 @@ import type {
   Gio,
   Gtk,
   Scale,
+  SimpleAction,
   Switch,
 } from "../mod.ts";
 
@@ -44,6 +45,8 @@ class MainWindow extends Gtk.ApplicationWindow {
   #header;
   #open_button;
   #open_dialog;
+  #popover;
+  #hamburger;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -130,7 +133,36 @@ class MainWindow extends Gtk.ApplicationWindow {
 
     this.#open_dialog.set_filters(filters); // Set the filters for the open dialog
     this.#open_dialog.set_default_filter(f);
+
+    // Create a new "Action"
+    const action = Gio.SimpleAction.new("something", undefined);
+    action.connect("activate", this.print_something);
+    this.add_action(action); // Here the action is being added to the window, but you could add it to the
+    // application or an "ActionGroup"
+
+    // Create a new menu, containing that action
+    const menu = Gio.Menu.new();
+    menu.append("Do Something", "win.something"); // Or you would do app.something if you had attached the
+    // action to the application
+
+    // Create a popover
+    this.#popover = Gtk.PopoverMenu(); // Create a new popover menu
+    this.#popover.set_menu_model(menu);
+
+    // Create a menu button
+    this.#hamburger = Gtk.MenuButton();
+    this.#hamburger.set_popover(this.#popover);
+    this.#hamburger.set_icon_name("open-menu-symbolic"); // Give it a nice icon
+
+    // Add menu button to the header bar
+    this.#header.pack_start(this.#hamburger);
   }
+
+  print_something = python.callback(
+    (_kwargs, _action: SimpleAction, _param): undefined => {
+      console.log("Something!");
+    },
+  );
 
   show_open_dialog = python.callback(
     (_kwargs, _button: Button): undefined => {

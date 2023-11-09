@@ -6,7 +6,19 @@ import type {
 } from "https://deno.land/x/python@0.4.1/src/python.ts";
 
 export interface Gio {
+  Menu: Menu;
+  SimpleAction: SimpleAction;
   ListStore: ListStore;
+}
+
+export interface Menu {
+  new: () => Menu;
+  append(arg0: string, arg1: string): unknown;
+}
+export interface SimpleAction {
+  // deno-lint-ignore no-explicit-any
+  new: (name: string, arg: any) => SimpleAction;
+  connect(signal: "activate", callback: Callback): void;
 }
 
 export interface ListStore {
@@ -37,8 +49,11 @@ export interface Gtk {
   CssProvider(): StyleProvider;
   ApplicationWindow: ApplicationWindowConstructor;
   FileDialog: FileDialog;
+
+  MenuButton(): MenuButton;
   HeaderBar(): HeaderBar;
   Scale(): Scale;
+  PopoverMenu(): PopoverMenu;
   Label(kwArg: NamedArgument): Label;
   Switch(): Switch;
   Box: (kwArg: NamedArgument) => Box;
@@ -80,6 +95,7 @@ export interface ApplicationWindow {
   set_titlebar: (header: HeaderBar) => void;
   present: () => void;
   close: () => void;
+  add_action(action: SimpleAction): void;
 }
 
 export interface Widget {
@@ -91,6 +107,11 @@ export interface Box extends Widget {
   set_spacing(spacing: number): void;
 }
 
+export interface MenuButton extends Widget {
+  set_popover(menu: PopoverMenu): void;
+  set_icon_name(name: string): void;
+}
+
 export interface HeaderBar extends Widget {
   pack_start(widget: Widget): void;
 }
@@ -100,6 +121,9 @@ export interface Switch extends Widget {
   connect(event: "state-set", callback: Callback): void;
 }
 
+export interface PopoverMenu extends Widget {
+  set_menu_model(menu: Menu): void;
+}
 export interface Scale extends Widget {
   connect(signal: "value-changed", callback: Callback): void;
   set_value(value: number): void;
