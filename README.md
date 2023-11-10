@@ -6,7 +6,7 @@ Wrapper + types over Gtk using deno-python
 
 Check out the examples directory
 
-![image](https://github.com/sigmaSd/deno-gtk-py/assets/22427111/d7cb344a-eca4-4af2-ab46-f9bd87249202)
+![image](https://github.com/sigmaSd/deno-gtk-py/assets/22427111/8e1a9e3b-624f-4990-8402-fdc7e87ae514)
 
 ## Random apps made with it
 - https://github.com/sigmaSd/gnome-nosleep
