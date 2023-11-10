@@ -1,24 +1,17 @@
 // port of https://github.com/Taiko2k/GTK4PythonTutorial
+
 import {
+  Adw,
+  Gdk,
+  Gio,
+  Gio_,
+  GLib,
+  Gtk,
+  Gtk_,
   kw,
   NamedArgument,
   python,
-} from "https://deno.land/x/python@0.4.1/mod.ts";
-import * as Gtk_ from "../../gtk.ts";
-import * as Adw_ from "../../adw.ts";
-import * as Gdk_ from "../../gdk.ts";
-import * as Gio_ from "../../gio.ts";
-import * as GLib_ from "../../glib.ts";
-
-const gi = python.import("gi");
-gi.require_version("Gtk", "4.0");
-gi.require_version("Adw", "1");
-
-const Gtk: Gtk_.Gtk = python.import("gi.repository.Gtk");
-const Adw: Adw_.Adw = python.import("gi.repository.Adw");
-const Gdk: Gdk_.Gdk = python.import("gi.repository.Gdk");
-const Gio: Gio_.Gio = python.import("gi.repository.Gio");
-const GLib: GLib_.GLib = python.import("gi.repository.GLib");
+} from "../../mod.ts";
 
 const css_provider = Gtk.CssProvider();
 css_provider.load_from_path("./examples/smoke/style.css");

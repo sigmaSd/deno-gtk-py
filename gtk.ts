@@ -20,6 +20,7 @@ export interface Gtk {
   Label(kwArg: NamedArgument): Label;
   Switch(): Switch;
   Box: (kwArg: NamedArgument) => Box;
+  ToggleButton(kwArg: NamedArgument): ToggleButton;
   Button: (kwArg: NamedArgument) => Button;
   CheckButton(arg0: NamedArgument): CheckButton;
   Orientation: {
@@ -34,6 +35,8 @@ export interface Gtk {
   ApplicationWindow: ApplicationWindowConstructor;
   FileDialog: FileDialog;
 }
+
+export type Application = PythonConvertible;
 
 export interface FileFilter {
   set_name(name: string): void;
@@ -140,9 +143,12 @@ export interface Scale extends Widget {
 export interface Label extends Widget {
 }
 
+export interface ToggleButton extends Button {
+}
 export interface Button extends Widget {
   set_icon_name(name: string): void;
   connect(event: "clicked", callback: Callback): void;
+  set_label(label: string): void;
 }
 export interface CheckButton extends Widget {
   get_active(): boolean;

@@ -1,16 +1,4 @@
-import python, {
-  kw,
-  NamedArgument,
-} from "https://deno.land/x/python@0.4.1/mod.ts";
-import * as Gtk_ from "../../gtk.ts";
-import * as Adw_ from "../../adw.ts";
-
-const gi = python.import("gi");
-gi.require_version("Gtk", "4.0");
-gi.require_version("Adw", "1");
-
-const Gtk: Gtk_.Gtk = python.import("gi.repository.Gtk");
-const Adw: Adw_.Adw = python.import("gi.repository.Adw");
+import { Adw, Gtk, Gtk_, kw, NamedArgument, python } from "../../mod.ts";
 
 class MyApp extends Adw.Application {
   #win: Gtk_.ApplicationWindow | undefined;
