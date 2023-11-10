@@ -43,7 +43,8 @@ class MainWindow extends Gtk.ApplicationWindow {
   #open_dialog;
   #popover;
   #hamburger;
-  #about: Gtk_.AboutDialog | undefined;
+  #dw;
+  // #about: Gtk_.AboutDialog | undefined;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -167,7 +168,49 @@ class MainWindow extends Gtk.ApplicationWindow {
     }
 
     menu.append("About", "win.about"); // Add it to the menu we created in previous section
+
+    this.#dw = Gtk.DrawingArea();
+
+    // Make it fill the available space (It will stretch with the window)
+    this.#dw.set_hexpand(true);
+    this.#dw.set_vexpand(true);
+
+    // Instead, If we didn't want it to fill the available space but wanted a fixed size
+    //this.#dw.set_content_width(100)
+    //this.#dw.set_content_height(100)
+
+    this.#dw.set_draw_func(this.draw);
+    this.#box3.append(this.#dw);
   }
+
+  draw = python.callback(
+    (_kwargs, _area: Gtk_.DrawingArea, c, w, h, _data): undefined => {
+      // c is a Cairo context
+
+      // Fill background with a colour
+      c.set_source_rgb(0, 0, 0);
+      c.paint();
+
+      // Draw a line
+      c.set_source_rgb(0.5, 0.0, 0.5);
+      c.set_line_width(3);
+      c.move_to(10, 10);
+      c.line_to(w - 10, h - 10);
+      c.stroke();
+
+      // Draw a rectangle
+      c.set_source_rgb(0.8, 0.8, 0.0);
+      c.rectangle(20, 20, 50, 20);
+      c.fill();
+
+      // Draw some text
+      c.set_source_rgb(0.1, 0.1, 0.1);
+      c.select_font_face("Sans");
+      c.set_font_size(13);
+      c.move_to(25, 35);
+      c.show_text("Test");
+    },
+  );
 
   show_about = python.callback(
     (_kwargs, _action: Gio_.SimpleAction, _param): undefined => {

@@ -8,14 +8,7 @@ import * as Gdk from "./gdk.ts";
 import * as Gio from "./gio.ts";
 
 export interface Gtk {
-  License: { GPL_3_0: never };
-  FileFilter(): FileFilter;
-  STYLE_PROVIDER_PRIORITY_APPLICATION: number;
-  StyleContext: StyleContext;
-  CssProvider(): CssProvider;
-  ApplicationWindow: ApplicationWindowConstructor;
-  FileDialog: FileDialog;
-
+  DrawingArea(): DrawingArea;
   AboutDialog(): AboutDialog;
   MenuButton(): MenuButton;
   HeaderBar(): HeaderBar;
@@ -30,6 +23,13 @@ export interface Gtk {
     HORIZONTAL: PythonConvertible;
     VERTICAL: PythonConvertible;
   };
+  License: { GPL_3_0: never };
+  FileFilter(): FileFilter;
+  STYLE_PROVIDER_PRIORITY_APPLICATION: number;
+  StyleContext: StyleContext;
+  CssProvider(): CssProvider;
+  ApplicationWindow: ApplicationWindowConstructor;
+  FileDialog: FileDialog;
 }
 
 export interface FileFilter {
@@ -132,4 +132,9 @@ export interface CheckButton extends Widget {
   get_active(): boolean;
   set_group(group: CheckButton): void;
   connect: (signal: "toggled", callback: Callback) => void;
+}
+export interface DrawingArea extends Widget {
+  set_draw_func(callback: Callback): void;
+  set_vexpand(arg0: boolean): void;
+  set_hexpand(arg0: boolean): void;
 }
