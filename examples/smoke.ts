@@ -191,6 +191,12 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#dw.add_controller(evk);
 
     this.#blobs = [];
+
+    this.#box2.set_spacing(10);
+    this.#box2.set_margin_top(10);
+    this.#box2.set_margin_bottom(10);
+    this.#box2.set_margin_start(10);
+    this.#box2.set_margin_end(10);
   }
 
   draw = python.callback(

@@ -96,6 +96,10 @@ export interface AboutDialog extends Widget {
   set_transient_for(window: ApplicationWindow): void;
 }
 export interface Box extends Widget {
+  set_margin_end(margin: number): void;
+  set_margin_start(margin: number): void;
+  set_margin_bottom(margin: number): void;
+  set_margin_top(margin: number): void;
   append(child: Widget): void;
   set_spacing(spacing: number): void;
 }
