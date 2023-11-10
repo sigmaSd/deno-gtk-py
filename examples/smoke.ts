@@ -4,29 +4,21 @@ import {
   NamedArgument,
   python,
 } from "https://deno.land/x/python@0.4.1/mod.ts";
-import type {
-  AboutDialog,
-  Adw,
-  Button,
-  FileDialog,
-  Gdk,
-  Gio,
-  GLib,
-  Gtk,
-  Scale,
-  SimpleAction,
-  Switch,
-} from "../mod.ts";
+import * as Gtk_ from "../gtk.ts";
+import * as Adw_ from "../adw.ts";
+import * as Gdk_ from "../gdk.ts";
+import * as Gio_ from "../gio.ts";
+import * as GLib_ from "../glib.ts";
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
 gi.require_version("Adw", "1");
 
-const Gtk: Gtk = python.import("gi.repository.Gtk");
-const Adw: Adw = python.import("gi.repository.Adw");
-const Gdk: Gdk = python.import("gi.repository.Gdk");
-const Gio: Gio = python.import("gi.repository.Gio");
-const GLib: GLib = python.import("gi.repository.GLib");
+const Gtk: Gtk_.Gtk = python.import("gi.repository.Gtk");
+const Adw: Adw_.Adw = python.import("gi.repository.Adw");
+const Gdk: Gdk_.Gdk = python.import("gi.repository.Gdk");
+const Gio: Gio_.Gio = python.import("gi.repository.Gio");
+const GLib: GLib_.GLib = python.import("gi.repository.GLib");
 
 const css_provider = Gtk.CssProvider();
 css_provider.load_from_path("./examples/style.css");
@@ -51,7 +43,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   #open_dialog;
   #popover;
   #hamburger;
-  #about: AboutDialog | undefined;
+  #about: Gtk_.AboutDialog | undefined;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_default_size(600, 250);
@@ -178,7 +170,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   }
 
   show_about = python.callback(
-    (_kwargs, _action: SimpleAction, _param): undefined => {
+    (_kwargs, _action: Gio_.SimpleAction, _param): undefined => {
       // this.#about = Gtk.AboutDialog();
       // this.#about.set_transient_for(this); // Makes the dialog always appear in from of the parent window
       // this.#about.set_modal(this); // Makes the parent window unresponsive while dialog is showing
@@ -218,19 +210,19 @@ class MainWindow extends Gtk.ApplicationWindow {
   );
 
   print_something = python.callback(
-    (_kwargs, _action: SimpleAction, _param): undefined => {
+    (_kwargs, _action: Gio_.SimpleAction, _param): undefined => {
       console.log("Something!");
     },
   );
 
   show_open_dialog = python.callback(
-    (_kwargs, _button: Button): undefined => {
+    (_kwargs, _button: Gtk_.Button): undefined => {
       this.#open_dialog.open(this, undefined, this.open_dialog_open_callback);
     },
   );
 
   open_dialog_open_callback = python.callback(
-    (_kwargs, dialog: FileDialog, result): undefined => {
+    (_kwargs, dialog: Gtk_.FileDialog, result): undefined => {
       try {
         const file = dialog.open_finish(result);
         if (file !== undefined) {
@@ -245,7 +237,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   );
 
   slider_changed = python.callback(
-    (_kwargs, slider: Scale): undefined => {
+    (_kwargs, slider: Gtk_.Scale): undefined => {
       console.log(slider.get_value());
       //FIXME typeof slider.get_value() is not a number
       //FIXME changing the slider many times creates an error:
@@ -254,7 +246,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   );
 
   switch_switched = python.callback(
-    (_kwargs, _switch: Switch, state): undefined => {
+    (_kwargs, _switch: Gtk_.Switch, state): undefined => {
       console.log(`The switch has been switched ${state ? "on" : "off"}`);
     },
   );
@@ -263,7 +255,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   //   console.log("toggle!");
   // });
 
-  hello = python.callback((_kwargs, _button: Button): undefined => {
+  hello = python.callback((_kwargs, _button: Gtk_.Button): undefined => {
     console.log("hello");
     // FIXME: the obvious way didn't work
     // deno-python have asBoolean but I can't acces it
