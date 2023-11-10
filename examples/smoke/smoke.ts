@@ -14,7 +14,9 @@ import {
 } from "../../mod.ts";
 
 const css_provider = Gtk.CssProvider();
-css_provider.load_from_path("./examples/smoke/style.css");
+css_provider.load_from_path(
+  new URL(import.meta.resolve("./style.css")).pathname,
+);
 Gtk.StyleContext.add_provider_for_display(
   Gdk.Display.get_default(),
   css_provider,
