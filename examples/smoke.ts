@@ -44,6 +44,8 @@ class MainWindow extends Gtk.ApplicationWindow {
   #popover;
   #hamburger;
   #dw;
+  // deno-lint-ignore no-explicit-any
+  #blobs: any[][];
   // #about: Gtk_.AboutDialog | undefined;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
@@ -181,6 +183,14 @@ class MainWindow extends Gtk.ApplicationWindow {
 
     this.#dw.set_draw_func(this.draw);
     this.#box3.append(this.#dw);
+
+    //FIXME clicking many times segfaults or errors with
+    // TypeError: 'builtin_function_or_method' object does not support vectorcall
+    const evk = Gtk.GestureClick.new();
+    evk.connect("pressed", this.dw_click); // could be "released"
+    this.#dw.add_controller(evk);
+
+    this.#blobs = [];
   }
 
   draw = python.callback(
@@ -190,6 +200,12 @@ class MainWindow extends Gtk.ApplicationWindow {
       // Fill background with a colour
       c.set_source_rgb(0, 0, 0);
       c.paint();
+
+      c.set_source_rgb(1, 0, 1);
+      for (const [x, y] of this.#blobs) {
+        c.arc(x, y, 10, 0, 2 * 3.1415926);
+        c.fill();
+      }
 
       // Draw a line
       c.set_source_rgb(0.5, 0.0, 0.5);
@@ -209,6 +225,13 @@ class MainWindow extends Gtk.ApplicationWindow {
       c.set_font_size(13);
       c.move_to(25, 35);
       c.show_text("Test");
+    },
+  );
+
+  dw_click = python.callback(
+    (_kwargs, _gesture: Gtk_.GestureClick, _data, x, y): undefined => {
+      this.#blobs.push([x, y]);
+      this.#dw.queue_draw(); // Force a redraw
     },
   );
 

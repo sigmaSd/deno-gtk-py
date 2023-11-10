@@ -8,6 +8,7 @@ import * as Gdk from "./gdk.ts";
 import * as Gio from "./gio.ts";
 
 export interface Gtk {
+  GestureClick: GestureClick;
   DrawingArea(): DrawingArea;
   AboutDialog(): AboutDialog;
   MenuButton(): MenuButton;
@@ -78,6 +79,10 @@ export interface FileDialog extends Widget {
   new: () => FileDialog;
   set_title(title: string): void;
 }
+export interface GestureClick {
+  connect(arg0: string, dw_click: Callback): void;
+  new: () => GestureClick;
+}
 export interface AboutDialog extends Widget {
   set_visible(visible: boolean): void;
   set_logo_icon_name(name: string): void;
@@ -134,6 +139,8 @@ export interface CheckButton extends Widget {
   connect: (signal: "toggled", callback: Callback) => void;
 }
 export interface DrawingArea extends Widget {
+  queue_draw(): void;
+  add_controller(evk: GestureClick): void;
   set_draw_func(callback: Callback): void;
   set_vexpand(arg0: boolean): void;
   set_hexpand(arg0: boolean): void;
