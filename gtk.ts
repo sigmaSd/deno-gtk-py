@@ -6,8 +6,10 @@ import type {
 } from "https://deno.land/x/python@0.4.1/mod.ts";
 import * as Gdk from "./gdk.ts";
 import * as Gio from "./gio.ts";
+import * as Adw from "./adw.ts";
 
 export interface Gtk {
+  Builder(): Builder;
   GestureClick: GestureClick;
   DrawingArea(): DrawingArea;
   AboutDialog(): AboutDialog;
@@ -53,6 +55,7 @@ export interface ApplicationWindowConstructor {
   new (kwArg: NamedArgument): ApplicationWindow;
 }
 export interface ApplicationWindow {
+  set_application(app: Adw.Application): void;
   set_child: (widget: Widget) => void;
   set_default_size: (width: number, height: number) => void;
   set_title: (name: string) => void;
@@ -78,6 +81,10 @@ export interface FileDialog extends Widget {
   ): void;
   new: () => FileDialog;
   set_title(title: string): void;
+}
+export interface Builder {
+  get_object<T>(object: string): T;
+  add_from_file(file: string): void;
 }
 export interface GestureClick {
   connect(arg0: string, dw_click: Callback): void;

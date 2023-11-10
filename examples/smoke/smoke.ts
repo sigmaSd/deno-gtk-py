@@ -4,11 +4,11 @@ import {
   NamedArgument,
   python,
 } from "https://deno.land/x/python@0.4.1/mod.ts";
-import * as Gtk_ from "../gtk.ts";
-import * as Adw_ from "../adw.ts";
-import * as Gdk_ from "../gdk.ts";
-import * as Gio_ from "../gio.ts";
-import * as GLib_ from "../glib.ts";
+import * as Gtk_ from "../../gtk.ts";
+import * as Adw_ from "../../adw.ts";
+import * as Gdk_ from "../../gdk.ts";
+import * as Gio_ from "../../gio.ts";
+import * as GLib_ from "../../glib.ts";
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
@@ -21,7 +21,7 @@ const Gio: Gio_.Gio = python.import("gi.repository.Gio");
 const GLib: GLib_.GLib = python.import("gi.repository.GLib");
 
 const css_provider = Gtk.CssProvider();
-css_provider.load_from_path("./examples/style.css");
+css_provider.load_from_path("./examples/smoke/style.css");
 Gtk.StyleContext.add_provider_for_display(
   Gdk.Display.get_default(),
   css_provider,
