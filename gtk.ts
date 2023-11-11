@@ -67,6 +67,7 @@ export interface ApplicationWindow {
   close: () => void;
   add_action(action: Gio.SimpleAction): void;
   connect(signal: "close-request", callback: Callback): void;
+  set_resizable(yes: boolean): void;
 }
 
 export interface Widget {
