@@ -54,3 +54,4 @@ Check out the examples directory
 ## Random apps made with it
 
 - https://github.com/sigmaSd/gnome-nosleep
+- https://github.com/sigmaSd/chrono
