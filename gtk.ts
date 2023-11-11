@@ -66,6 +66,7 @@ export interface ApplicationWindow {
   present: () => void;
   close: () => void;
   add_action(action: Gio.SimpleAction): void;
+  connect(signal: "close-request", callback: Callback): void;
 }
 
 export interface Widget {
@@ -144,6 +145,7 @@ export interface Label extends Widget {
 }
 
 export interface ToggleButton extends Button {
+  get_active(): boolean;
 }
 export interface Button extends Widget {
   set_icon_name(name: string): void;
