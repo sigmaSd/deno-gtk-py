@@ -1,5 +1,5 @@
-import { Callback } from "https://deno.land/x/python@0.4.1/mod.ts";
-import * as Gtk from "./gtk.ts";
+import type { Callback } from "./deps.ts";
+import * as Gtk_ from "./gtk.ts";
 
 export interface Gio {
   Menu: Menu;
@@ -21,7 +21,7 @@ export interface ListStore {
   // takes a type instead of a value
   // deno-lint-ignore no-explicit-any
   new: (filter: any) => ListStore;
-  append(f: Gtk.FileFilter): void;
+  append(f: Gtk_.FileFilter): void;
 }
 export interface File {
   get_path(): string;

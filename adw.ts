@@ -1,8 +1,4 @@
-import type {
-  Callback,
-  NamedArgument,
-  PythonConvertible,
-} from "https://deno.land/x/python@0.4.1/mod.ts";
+import type { Callback, NamedArgument, PythonConvertible } from "./deps.ts";
 
 export interface Adw {
   AboutWindow(kwArg: NamedArgument): AboutWindow;

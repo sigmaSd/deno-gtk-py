@@ -1,4 +1,4 @@
-import python from "https://deno.land/x/python@0.4.1/mod.ts";
+import { python } from "./deps.ts";
 import * as Gtk_ from "./gtk.ts";
 import * as Adw_ from "./adw.ts";
 import * as Gdk_ from "./gdk.ts";
@@ -20,8 +20,4 @@ export const Adw: Adw_.Adw = python.import("gi.repository.Adw");
 export const Gdk: Gdk_.Gdk = python.import("gi.repository.Gdk");
 export const Gio: Gio_.Gio = python.import("gi.repository.Gio");
 export const GLib: GLib_.GLib = python.import("gi.repository.GLib");
-export {
-  kw,
-  NamedArgument,
-  python,
-} from "https://deno.land/x/python@0.4.1/mod.ts";
+export { kw, NamedArgument, python } from "./deps.ts";

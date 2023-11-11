@@ -1,12 +1,8 @@
 // deno-lint-ignore-file no-empty-interface
-import type {
-  Callback,
-  NamedArgument,
-  PythonConvertible,
-} from "https://deno.land/x/python@0.4.1/mod.ts";
-import * as Gdk from "./gdk.ts";
-import * as Gio from "./gio.ts";
-import * as Adw from "./adw.ts";
+import type { Callback, NamedArgument, PythonConvertible } from "./deps.ts";
+import * as Gdk_ from "./gdk.ts";
+import * as Gio_ from "./gio.ts";
+import * as Adw_ from "./adw.ts";
 
 export interface Gtk {
   Builder(): Builder;
@@ -45,7 +41,7 @@ export interface FileFilter {
 
 export interface StyleContext {
   add_provider_for_display(
-    display: Gdk.Display,
+    display: Gdk_.Display,
     provider: CssProvider,
     proiority: number,
   ): unknown;
@@ -58,14 +54,14 @@ export interface ApplicationWindowConstructor {
   new (kwArg: NamedArgument): ApplicationWindow;
 }
 export interface ApplicationWindow {
-  set_application(app: Adw.Application): void;
+  set_application(app: Adw_.Application): void;
   set_child: (widget: Widget) => void;
   set_default_size: (width: number, height: number) => void;
   set_title: (name: string) => void;
   set_titlebar: (header: HeaderBar) => void;
   present: () => void;
   close: () => void;
-  add_action(action: Gio.SimpleAction): void;
+  add_action(action: Gio_.SimpleAction): void;
   connect(signal: "close-request", callback: Callback): void;
   set_resizable(yes: boolean): void;
 }
@@ -75,9 +71,9 @@ export interface Widget {
 }
 export interface FileDialog extends Widget {
   set_default_filter(f: FileFilter): void;
-  set_filters(filters: Gio.ListStore): void;
+  set_filters(filters: Gio_.ListStore): void;
   // deno-lint-ignore no-explicit-any
-  open_finish(result: any): Gio.File;
+  open_finish(result: any): Gio_.File;
   open(
     window: ApplicationWindow,
     // deno-lint-ignore no-explicit-any
@@ -131,7 +127,7 @@ export interface Switch extends Widget {
 }
 
 export interface PopoverMenu extends Widget {
-  set_menu_model(menu: Gio.Menu): void;
+  set_menu_model(menu: Gio_.Menu): void;
 }
 export interface Scale extends Widget {
   connect(signal: "value-changed", callback: Callback): void;
