@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-empty-interface
 import type { Callback, NamedArgument, PythonConvertible } from "./deps.ts";
 import * as Gdk_ from "./gdk.ts";
 import * as Gio_ from "./gio.ts";
