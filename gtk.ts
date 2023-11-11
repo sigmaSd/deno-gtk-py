@@ -104,6 +104,7 @@ export interface AboutDialog extends Widget {
   set_transient_for(window: ApplicationWindow): void;
 }
 export interface Box extends Widget {
+  set_homogeneous(yes: boolean): void;
   set_margin_end(margin: number): void;
   set_margin_start(margin: number): void;
   set_margin_bottom(margin: number): void;
@@ -139,6 +140,8 @@ export interface Scale extends Widget {
 }
 
 export interface Label extends Widget {
+  get_label(): string;
+  set_label(label: string): void;
 }
 
 export interface ToggleButton extends Button {
