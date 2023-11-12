@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "run": "deno run --unstable-ffi -A",
+    "example:simple": "deno task run examples/simple/main.ts",
+    "example:smoke": "deno task run examples/smoke/main.ts",
+    "example:builder": "deno task run examples/builder/main.ts"
+  } 
+}
