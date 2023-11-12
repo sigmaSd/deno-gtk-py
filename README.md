@@ -5,7 +5,6 @@ Wrapper + types over Gtk using deno-python
 ## Usage
 
 ```ts
-// should replace the commit with latest commmit
 import {
   Adw,
   Gtk,
@@ -13,7 +12,7 @@ import {
   kw,
   NamedArgument,
   python,
-} from "https://raw.githubusercontent.com/sigmaSd/deno-gtk-py/13f3da6c4890d62e09312747c905fa85263f5ca8/mod.ts";
+} from "https://raw.githubusercontent.com/sigmaSd/deno-gtk-py/0.1.0/mod.ts";
 
 class MainWindow extends Gtk.ApplicationWindow {
   #label;
@@ -57,4 +56,6 @@ Check out the examples directory
 - https://github.com/sigmaSd/chrono
 
 ### TODO
-- More types, reference http://lazka.github.io/pgi-docs/ https://docs.gtk.org/gtk4/
+
+- More types, reference http://lazka.github.io/pgi-docs/
+  https://docs.gtk.org/gtk4/
