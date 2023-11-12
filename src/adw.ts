@@ -1,4 +1,4 @@
-import type { Callback, NamedArgument, PythonConvertible } from "./deps.ts";
+import type { Callback, NamedArgument, PythonConvertible } from "../mod.ts";
 
 export interface Adw {
   AboutWindow(kwArg: NamedArgument): AboutWindow;

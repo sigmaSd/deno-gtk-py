@@ -1,4 +1,4 @@
-import { Callback } from "https://deno.land/x/python@0.4.1/src/python.ts";
+import type { Callback } from "../mod.ts";
 
 export interface GLib {
   timeout_add(milliseconds: number, callback: Callback): number;

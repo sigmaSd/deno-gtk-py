@@ -1,5 +1,4 @@
-import type { Callback } from "./deps.ts";
-import * as Gtk_ from "./gtk.ts";
+import type { Callback, Gtk_ } from "../mod.ts";
 
 export interface Gio {
   Menu: Menu;

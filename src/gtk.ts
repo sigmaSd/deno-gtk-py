@@ -1,7 +1,11 @@
-import type { Callback, NamedArgument, PythonConvertible } from "./deps.ts";
-import * as Gdk_ from "./gdk.ts";
-import * as Gio_ from "./gio.ts";
-import * as Adw_ from "./adw.ts";
+import type {
+  Adw_,
+  Callback,
+  Gdk_,
+  Gio_,
+  NamedArgument,
+  PythonConvertible,
+} from "../mod.ts";
 
 export interface Gtk {
   Builder(): Builder;
