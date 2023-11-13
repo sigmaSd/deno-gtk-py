@@ -47,7 +47,7 @@ export interface StyleContext {
     display: Gdk_.Display,
     provider: CssProvider,
     proiority: number,
-  ): unknown;
+  ): void;
 }
 
 export interface CssProvider {
@@ -139,16 +139,16 @@ export interface Scale extends Widget {
   set_draw_value(show: boolean): void;
   set_range(start: number, end: number): void;
   set_digits(digits: number): void;
-  get_value(): number;
+  get_value(): { valueOf(): number };
 }
 
 export interface Label extends Widget {
-  get_label(): string;
+  get_label(): { valueOf: () => string };
   set_label(label: string): void;
 }
 
 export interface ToggleButton extends Button {
-  get_active(): boolean;
+  get_active(): { valueOf: () => boolean };
 }
 export interface Button extends Widget {
   set_icon_name(name: string): void;
@@ -156,7 +156,7 @@ export interface Button extends Widget {
   set_label(label: string): void;
 }
 export interface CheckButton extends Widget {
-  get_active(): boolean;
+  get_active(): { valueOf: () => boolean };
   set_group(group: CheckButton): void;
   connect: (signal: "toggled", callback: Callback) => void;
 }

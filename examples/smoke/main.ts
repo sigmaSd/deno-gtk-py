@@ -293,7 +293,7 @@ class MainWindow extends Gtk.ApplicationWindow {
       try {
         const file = dialog.open_finish(result);
         if (file !== undefined) {
-          console.log(`File path is ${file.get_path()}`);
+          console.log(`File path is ${file.get_path().valueOf()}`);
         }
       } catch (error) {
         if ("message" in error) {
@@ -305,8 +305,7 @@ class MainWindow extends Gtk.ApplicationWindow {
 
   slider_changed = python.callback(
     (_kwargs, slider: Gtk_.Scale): undefined => {
-      console.log(slider.get_value());
-      //FIXME typeof slider.get_value() is not a number
+      console.log(slider.get_value().valueOf());
       //FIXME changing the slider many times creates an error:
       //TypeError: 'builtin_function_or_method' object does not support vectorcall
     },
@@ -323,10 +322,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   // });
 
   hello = python.callback((_kwargs, _button: Gtk_.Button): undefined => {
-    console.log("hello");
-    // FIXME: the obvious way didn't work
-    // deno-python have asBoolean but I can't acces it
-    if (this.#check.get_active().toString() === "True") {
+    if (this.#check.get_active().valueOf()) {
       console.log("Goodbye world!");
       this.close();
     }

@@ -7,7 +7,7 @@ export interface Gio {
 }
 export interface Menu {
   new: () => Menu;
-  append(arg0: string, arg1: string): unknown;
+  append(arg0: string, arg1: string): void;
 }
 export interface SimpleAction {
   // deno-lint-ignore no-explicit-any
@@ -23,5 +23,5 @@ export interface ListStore {
   append(f: Gtk_.FileFilter): void;
 }
 export interface File {
-  get_path(): string;
+  get_path(): { valueOf: () => string };
 }
