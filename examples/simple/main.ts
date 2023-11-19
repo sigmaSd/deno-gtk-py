@@ -15,7 +15,7 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.set_child(this.#button);
   }
 
-  onClick = python.callback((_, button: Gtk_.ToggleButton): undefined => {
+  onClick = python.callback((_, button: Gtk_.ToggleButton) => {
     this.#state = !this.#state;
     (this.#state) ? button.set_label("ON") : button.set_label("OFF");
   });
@@ -27,7 +27,7 @@ class App extends Adw.Application {
     super(kwArg);
     this.connect("activate", this.onActivate);
   }
-  onActivate = python.callback((_kwarg, app: Gtk_.Application): undefined => {
+  onActivate = python.callback((_kwarg, app: Gtk_.Application) => {
     this.#win = new MainWindow(new NamedArgument("application", app));
     this.#win.present();
   });

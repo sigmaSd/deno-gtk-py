@@ -29,7 +29,7 @@ class App extends Adw.Application {
     super(kwArg);
     this.connect("activate", this.onActivate);
   }
-  onActivate = python.callback((_kwarg, app: Gtk_.Application): undefined => {
+  onActivate = python.callback((_kwarg, app: Gtk_.Application) => {
     this.#win = new MainWindow(new NamedArgument("application", app));
     this.#win.present();
   });

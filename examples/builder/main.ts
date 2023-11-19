@@ -7,7 +7,7 @@ class MyApp extends Adw.Application {
     this.connect("activate", this.onActivate);
   }
 
-  onActivate = python.callback((_kwarg, _app): undefined => {
+  onActivate = python.callback((_kwarg, _app) => {
     const builder = Gtk.Builder();
     builder.add_from_file("./examples/builder/ui.xml");
 
@@ -21,7 +21,7 @@ class MyApp extends Adw.Application {
     this.#win.present();
   });
 
-  hello = python.callback((_kwarg, _button: Gtk_.Button): undefined => {
+  hello = python.callback((_kwarg, _button: Gtk_.Button) => {
     console.log("Hello");
   });
 }

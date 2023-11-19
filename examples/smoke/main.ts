@@ -195,7 +195,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   }
 
   draw = python.callback(
-    (_kwargs, _area: Gtk_.DrawingArea, c, w, h, _data): undefined => {
+    (_kwargs, _area: Gtk_.DrawingArea, c, w, h, _data) => {
       // c is a Cairo context
 
       // Fill background with a colour
@@ -230,14 +230,14 @@ class MainWindow extends Gtk.ApplicationWindow {
   );
 
   dw_click = python.callback(
-    (_kwargs, _gesture: Gtk_.GestureClick, _data, x, y): undefined => {
+    (_kwargs, _gesture: Gtk_.GestureClick, _data, x, y) => {
       this.#blobs.push([x, y]);
       this.#dw.queue_draw(); // Force a redraw
     },
   );
 
   show_about = python.callback(
-    (_kwargs, _action: Gio_.SimpleAction, _param): undefined => {
+    (_kwargs, _action: Gio_.SimpleAction, _param) => {
       // this.#about = Gtk.AboutDialog();
       // this.#about.set_transient_for(this); // Makes the dialog always appear in from of the parent window
       // this.#about.set_modal(this); // Makes the parent window unresponsive while dialog is showing
@@ -277,19 +277,19 @@ class MainWindow extends Gtk.ApplicationWindow {
   );
 
   print_something = python.callback(
-    (_kwargs, _action: Gio_.SimpleAction, _param): undefined => {
+    (_kwargs, _action: Gio_.SimpleAction, _param) => {
       console.log("Something!");
     },
   );
 
   show_open_dialog = python.callback(
-    (_kwargs, _button: Gtk_.Button): undefined => {
+    (_kwargs, _button: Gtk_.Button) => {
       this.#open_dialog.open(this, undefined, this.open_dialog_open_callback);
     },
   );
 
   open_dialog_open_callback = python.callback(
-    (_kwargs, dialog: Gtk_.FileDialog, result): undefined => {
+    (_kwargs, dialog: Gtk_.FileDialog, result) => {
       try {
         const file = dialog.open_finish(result);
         if (file !== undefined) {
@@ -304,7 +304,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   );
 
   slider_changed = python.callback(
-    (_kwargs, slider: Gtk_.Scale): undefined => {
+    (_kwargs, slider: Gtk_.Scale) => {
       console.log(slider.get_value().valueOf());
       //FIXME changing the slider many times creates an error:
       //TypeError: 'builtin_function_or_method' object does not support vectorcall
@@ -312,19 +312,21 @@ class MainWindow extends Gtk.ApplicationWindow {
   );
 
   switch_switched = python.callback(
-    (_kwargs, _switch: Gtk_.Switch, state): undefined => {
+    (_kwargs, _switch: Gtk_.Switch, state) => {
       console.log(`The switch has been switched ${state ? "on" : "off"}`);
     },
   );
 
-  // radio_toggled = python.callback((_kwargs): undefined => {
+  // radio_toggled = python.callback((_kwargs) => {
   //   console.log("toggle!");
   // });
 
-  hello = python.callback((_kwargs, _button: Gtk_.Button): undefined => {
+  hello = python.callback((_kwargs, _button: Gtk_.Button) => {
     if (this.#check.get_active().valueOf()) {
       console.log("Goodbye world!");
       this.close();
+    } else {
+      console.log("Hello world!");
     }
   });
 }
@@ -336,7 +338,7 @@ class MyApp extends Adw.Application {
     this.connect("activate", this.onActivate);
   }
 
-  onActivate = python.callback((_kwargs, app): undefined => {
+  onActivate = python.callback((_kwargs, app) => {
     this.#win = new MainWindow(new NamedArgument("application", app));
     this.#win.present();
   });
