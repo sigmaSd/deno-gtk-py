@@ -26,7 +26,10 @@ export interface Gtk {
     HORIZONTAL: PythonConvertible;
     VERTICAL: PythonConvertible;
   };
-  License: { GPL_3_0: never };
+  License: {
+    MIT_X11: never;
+    GPL_3_0: never;
+  };
   FileFilter(): FileFilter;
   STYLE_PROVIDER_PRIORITY_APPLICATION: number;
   StyleContext: StyleContext;
@@ -95,6 +98,14 @@ export interface GestureClick {
   new: () => GestureClick;
 }
 export interface AboutDialog extends Widget {
+  /**
+   * Sets the comments string to display in the about dialog. This should be a short string of one or two lines.
+   */
+  set_comments(comments: string): void;
+  /**
+   * Sets the name to display in the about dialog. If this is not set, it defaults to g_get_application_name().
+   */
+  set_program_name(name: string): void;
   set_visible(visible: boolean): void;
   set_logo_icon_name(name: string): void;
   set_version(version: string): void;
