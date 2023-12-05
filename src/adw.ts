@@ -1,4 +1,10 @@
-import type { Callback, NamedArgument, PythonConvertible } from "../mod.ts";
+import type {
+  Callback,
+  Gtk_,
+  NamedArgument,
+  PyObject,
+  PythonConvertible,
+} from "../mod.ts";
 
 export interface Adw {
   AboutWindow(kwArg: NamedArgument): AboutWindow;
@@ -23,7 +29,14 @@ export interface AboutWindow {
 export interface ApplicationConstructor {
   new (kwArg: NamedArgument): Application;
 }
-export interface Application {
+
+export interface Application extends PyObject {
+  inhibit(
+    window: Gtk_.ApplicationWindow,
+    flags: number,
+    reason?: string,
+  ): number;
+  uninhibit(cookie: number): void;
   //FIXME: args type
   run: (args: string[]) => void;
   connect: (signal: "activate", callback: Callback) => void;

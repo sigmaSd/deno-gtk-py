@@ -30,6 +30,12 @@ export interface Gtk {
     MIT_X11: never;
     GPL_3_0: never;
   };
+  ApplicationInhibitFlags: {
+    LOGOUT: number;
+    SWITCH: number;
+    SUSPEND: number;
+    IDLE: number;
+  };
   FileFilter(): FileFilter;
   STYLE_PROVIDER_PRIORITY_APPLICATION: number;
   StyleContext: StyleContext;
