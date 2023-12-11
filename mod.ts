@@ -1,5 +1,5 @@
-import { python } from "https://deno.land/x/python@0.4.2/mod.ts";
-export * from "https://deno.land/x/python@0.4.2/mod.ts";
+import { python } from "https://deno.land/x/python@0.4.3/mod.ts";
+export * from "https://deno.land/x/python@0.4.3/mod.ts";
 
 import * as Gtk_ from "./src/gtk.ts";
 import * as Adw_ from "./src/adw.ts";
