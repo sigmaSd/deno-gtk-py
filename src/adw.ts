@@ -43,4 +43,5 @@ export interface Application extends PyObject {
   //FIXME: PythonConvertible should not be needed
   // it should be ApplicaitonWindow
   get_active_window: () => PythonConvertible;
+  quit: () => void;
 }

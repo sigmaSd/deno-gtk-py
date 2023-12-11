@@ -345,4 +345,14 @@ class MyApp extends Adw.Application {
 }
 
 const app = new MyApp(new NamedArgument("application_id", "com.example.com"));
+
+const signal = python.import("signal");
+GLib.unix_signal_add(
+  GLib.PRIORITY_HIGH,
+  signal.SIGINT,
+  python.callback(() => {
+    app.quit();
+  }),
+);
+
 app.run(Deno.args);
