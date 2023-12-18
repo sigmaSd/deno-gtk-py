@@ -19,7 +19,7 @@ export interface Gtk {
   Label(kwArg: NamedArgument): Label;
   Switch(): Switch;
   Box: (kwArg: NamedArgument) => Box;
-  ToggleButton(kwArg: NamedArgument): ToggleButton;
+  ToggleButton(kwArg?: NamedArgument): ToggleButton;
   Button: (kwArg: NamedArgument) => Button;
   CheckButton(arg0: NamedArgument): CheckButton;
   Orientation: {
