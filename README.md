@@ -49,6 +49,7 @@ Check out the examples directory
   this, for example `setTimeout` wont work in a python.callback after running
   Gtk.Applicaiton. The solution is to use the primitives that GLib provides, for
   example instead of `setTimeout`, use `GLib.add_timeout`
+- For running async subprocess checkout `Gio.Subprocess`
 
 ## Random apps made with it
 
