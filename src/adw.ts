@@ -12,6 +12,7 @@ export interface Adw {
   run: () => void;
 }
 export interface AboutWindow {
+  set_application_icon(icon: string): void;
   set_visible(visible: boolean): void;
   set_developers(developers: string[]): void;
   set_copyright(copyright: string): void;
