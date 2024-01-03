@@ -58,5 +58,6 @@ export interface PreferencesWindow /* extends Gtk_.Window */ {
   add(page: PreferencesPage): void;
 }
 export interface PreferencesGroup extends Gtk_.Widget {
+  set_title(title: string): void;
   add(child: Gtk_.Widget): void;
 }
