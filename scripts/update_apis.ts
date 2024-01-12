@@ -17,7 +17,7 @@ async function getNewTag() {
 
 function getNextMinorVersion(currentVersion: string) {
   const versionArray = currentVersion.split(".").map(Number);
-  versionArray[1]++;
+  versionArray[2]++;
   const nextVersion = versionArray.join(".");
   return nextVersion;
 }
