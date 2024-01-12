@@ -1,17 +1,14 @@
+import * as semver from "https://deno.land/std@0.212.0/semver/mod.ts";
 import $ from "https://deno.land/x/dax@0.36.0/mod.ts";
 
-function assert<T>(
-  value: T,
-  message = "Value should be defined",
-): asserts value is NonNullable<T> {
-  if (value === undefined || value === null) {
-    throw new Error(message);
-  }
-}
-
 async function getNewTag() {
-  const tag = await $`git tag`.lines().then((lines) => lines.at(-1));
-  assert(tag);
+  const tag = await $`git tag`.lines().then((lines) =>
+    lines.reduce((pV, cV) => {
+      const semCv = semver.parse(cV);
+      const semPv = semver.parse(pV);
+      return semver.gt(semCv, semPv) ? cV : pV;
+    })
+  );
   return getNextMinorVersion(tag);
 }
 
