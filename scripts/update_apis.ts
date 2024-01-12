@@ -29,6 +29,6 @@ if (import.meta.main) {
   await $`git commit -m "add new apis"`;
   await $`git tag -a ${newTag} -m "add new apis"`;
   if (confirm("push to remote?")) {
-    await $`git push --follow-tags"`;
+    await $`git push --follow-tags`;
   }
 }
