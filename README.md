@@ -56,7 +56,6 @@ Check out the examples directory
 - https://github.com/sigmaSd/gnome-nosleep
 - https://github.com/sigmaSd/chrono
 
-### TODO
-
-- More types, reference http://lazka.github.io/pgi-docs/
-  https://docs.gtk.org/gtk4/
+## References
+  - python gtk4 docs: http://lazka.github.io/pgi-docs/
+  - gtk4 docs: https://docs.gtk.org/gtk4/
