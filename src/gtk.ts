@@ -147,6 +147,7 @@ export interface Box extends Widget {
 }
 
 export interface MenuButton extends Widget {
+  set_primary(yes: boolean): void;
   set_popover(menu: PopoverMenu): void;
   set_icon_name(name: string): void;
 }
