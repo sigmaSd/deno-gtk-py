@@ -93,7 +93,7 @@ export interface ApplicationWindow extends Window {
   set_resizable(yes: boolean): void;
 }
 
-export interface Widget extends GObject_.GObject {
+export interface Widget extends GObject_.Object {
   set_css_classes(classes: string[]): void;
   set_visible(visible: boolean): void;
 }
