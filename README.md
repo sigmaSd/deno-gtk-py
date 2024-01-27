@@ -15,11 +15,26 @@ import {
 } from "https://raw.githubusercontent.com/sigmaSd/deno-gtk-py/0.2.21/mod.ts";
 
 class MainWindow extends Gtk.ApplicationWindow {
-  #label;
+  #button;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
-    this.#label = Gtk.Label(kw`label=${"Gtk 4"}`);
-    this.set_child(this.#label);
+    this.set_title("Demo");
+    this.#button = Gtk.Button(kw`label=${"Click Me"}`);
+    this.#button.connect(
+      "clicked",
+      python.callback(() => {
+        Adw.MessageDialog(
+          //@ts-ignore it is a window
+          new NamedArgument("transient_for", this),
+          new NamedArgument("heading", "Deno GTK PY"),
+          new NamedArgument(
+            "body",
+            "Hello World",
+          ),
+        ).present();
+      }),
+    );
+    this.set_child(this.#button);
   }
 }
 
