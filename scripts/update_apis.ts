@@ -20,8 +20,15 @@ function getNextMinorVersion(currentVersion: string) {
   return nextVersion;
 }
 
+function addVersionToReadme(newTag: string) {
+  let readme = Deno.readTextFileSync("./README.md");
+  readme = readme.replace(/deno-gtk-py\/([^/]+)/, newTag);
+  Deno.writeTextFileSync("./README.md", readme);
+}
+
 if (import.meta.main) {
   const newTag = await getNewTag();
+  addVersionToReadme(newTag);
   $.setPrintCommand(true);
   await $`git add .`;
   await $`git commit -m "add new apis"`;
