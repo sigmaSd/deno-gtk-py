@@ -1,13 +1,13 @@
 // port of https://github.com/Taiko2k/GTK4PythonTutorial
 
 import {
-  Adw,
-  Gdk,
-  Gio,
-  Gio_,
-  GLib,
-  Gtk,
-  Gtk_,
+  Adw1 as Adw,
+  Gdk4 as Gdk,
+  Gio2 as Gio,
+  Gio2_ as Gio_,
+  GLib2 as GLib,
+  Gtk4 as Gtk,
+  Gtk4_ as Gtk_,
   kw,
   NamedArgument,
   python,

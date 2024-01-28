@@ -1,4 +1,11 @@
-import { Adw, Gtk, Gtk_, kw, NamedArgument, python } from "../../mod.ts";
+import {
+  Adw1 as Adw,
+  Gtk4 as Gtk,
+  Gtk4_ as Gtk_,
+  kw,
+  NamedArgument,
+  python,
+} from "../../mod.ts";
 
 class MainWindow extends Gtk.ApplicationWindow {
   #button;
