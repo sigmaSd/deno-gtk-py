@@ -7,6 +7,7 @@ export interface Gtk {
   MenuItem(kwArg: NamedArgument): MenuItem;
   Menu(): Menu;
   main(): void;
+  main_quit(): void;
 }
 
 export interface Widget {

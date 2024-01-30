@@ -12,7 +12,7 @@ import {
   kw,
   NamedArgument,
   python,
-} from "https://raw.githubusercontent.com/sigmaSd/deno-gtk-py/0.3.0/mod.ts";
+} from "https://raw.githubusercontent.com/sigmaSd/0.3.1/mod.ts";
 
 class MainWindow extends Gtk.ApplicationWindow {
   #button;
