@@ -1,17 +1,24 @@
 // port of https://github.com/Taiko2k/GTK4PythonTutorial
 
 import {
-  Adw1 as Adw,
-  Gdk4 as Gdk,
-  Gio2 as Gio,
+  Adw1_ as Adw_,
+  Gdk4_ as Gdk_,
   Gio2_ as Gio_,
-  GLib2 as GLib,
-  Gtk4 as Gtk,
+  GLib2_ as GLib_,
   Gtk4_ as Gtk_,
   kw,
   NamedArgument,
   python,
 } from "../../mod.ts";
+
+const gi = python.import("gi");
+gi.require_version("Gtk", "4.0");
+gi.require_version("Adw", "1");
+const Gtk: Gtk_.Gtk = python.import("gi.repository.Gtk");
+const Adw: Adw_.Adw = python.import("gi.repository.Adw");
+const Gio: Gio_.Gio = python.import("gi.repository.Gio");
+const Gdk: Gdk_.Gdk = python.import("gi.repository.Gdk");
+const GLib: GLib_.GLib = python.import("gi.repository.GLib");
 
 const css_provider = Gtk.CssProvider();
 css_provider.load_from_path(

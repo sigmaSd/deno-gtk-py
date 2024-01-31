@@ -6,13 +6,18 @@ Wrapper + types over Gtk using deno-python
 
 ```ts
 import {
-  Adw1 as Adw,
-  Gtk4 as Gtk,
+  Adw1_ as Adw_,
   Gtk4_ as Gtk_,
   kw,
   NamedArgument,
   python,
-} from "https://raw.githubusercontent.com/sigmaSd/0.3.1/mod.ts";
+} from "../../mod.ts";
+
+const gi = python.import("gi");
+gi.require_version("Gtk", "4.0");
+gi.require_version("Adw", "1");
+const Gtk: Gtk_.Gtk = python.import("gi.repository.Gtk");
+const Adw: Adw_.Adw = python.import("gi.repository.Adw");
 
 class MainWindow extends Gtk.ApplicationWindow {
   #button;
