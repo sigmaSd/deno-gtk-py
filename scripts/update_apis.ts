@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-read --allow-run=git --allow-env
+#!/usr/bin/env -S deno run --allow-read --allow-write=./README.md --allow-run=git --allow-env
 import * as semver from "https://deno.land/std@0.212.0/semver/mod.ts";
 import $ from "https://deno.land/x/dax@0.36.0/mod.ts";
 
