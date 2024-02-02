@@ -5,6 +5,7 @@ Wrapper + types over Gtk using deno-python
 ## Usage
 
 ```ts
+#!/usr/bin/env -S deno run --allow-ffi --allow-env=DENO_PYTHON_PATH --unstable-ffi
 import {
   Adw1_ as Adw_,
   Gtk4_ as Gtk_,
