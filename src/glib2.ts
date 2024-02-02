@@ -2,10 +2,16 @@ import type { Callback } from "../mod.ts";
 
 export interface GLib {
   PRIORITY_HIGH: number;
-  unix_signal_add(priority: number, signal: any, callback: Callback): unknown;
+  PRIORITY_DEFAULT: number;
+  set_application_name(name: string): void;
+  unix_signal_add(priority: number, signal: string, callback: Callback): void;
   timeout_add(
     milliseconds: number,
     callback: Callback,
   ): { valueOf: () => number };
-  set_application_name(name: string): void;
+  idle_add(callback: Callback): void;
+}
+
+export interface Bytes {
+  get_data(): { decode(encoding: "utf-8"): string };
 }
