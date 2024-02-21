@@ -1,5 +1,13 @@
 {
   "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@denosaurs/python@0.4.3": "jsr:@denosaurs/python@0.4.3"
+    },
+    "jsr": {
+      "@denosaurs/python@0.4.3": {}
+    }
+  },
   "redirects": {
     "https://deno.land/x/dax/mod.ts": "https://deno.land/x/dax@0.36.0/mod.ts"
   },
