@@ -1,6 +1,6 @@
 {
   "name": "@sigmasd/deno-gtk-py",
-  "version": "0.4.9",
+  "version": "0.4.11",
   "exports": "./mod.ts",
   "tasks": {
     "run": "deno run --unstable-ffi -A",
