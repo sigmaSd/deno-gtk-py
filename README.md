@@ -62,7 +62,7 @@ app.run(Deno.args);
 
 Check out the examples directory
 
-![image](https://github.com/sigmaSd/deno-gtk-py/assets/22427111/d7cb344a-eca4-4af2-ab46-f9bd87249202)
+![image](https://github.com/sigmaSd/deno-gtk-py/assets/22427111/cd8a4a23-4ef2-4185-b57a-94de1494cbdb)
 
 ## Tips
 
