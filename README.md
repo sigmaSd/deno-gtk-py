@@ -12,7 +12,7 @@ import {
   kw,
   NamedArgument,
   python,
-} from "https://raw.githubusercontent.com/sigmaSd/0.4.6/mod.ts";
+} from "jsr:@sigmasd/deno-gtk-py"
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
