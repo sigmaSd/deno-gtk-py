@@ -1,5 +1,5 @@
 {
-  "name": "@sigmasd/deno-gtk-py",
+  "name": "@sigma/gtk-py",
   "version": "0.4.13",
   "exports": "./mod.ts",
   "tasks": {
