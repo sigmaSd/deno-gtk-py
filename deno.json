@@ -1,6 +1,6 @@
 {
   "name": "@sigma/gtk-py",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "exports": "./mod.ts",
   "tasks": {
     "run": "deno run --unstable-ffi -A",
