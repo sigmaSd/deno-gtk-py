@@ -85,7 +85,7 @@ Check out the examples directory
 @module
 */
 
-export * from "@denosaurs/python@0.4.3";
+export * from "@denosaurs/python";
 
 export * as Gtk4_ from "./src/gtk4.ts";
 export * as Gtk3_ from "./src/gtk3.ts";
