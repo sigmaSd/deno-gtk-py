@@ -222,8 +222,8 @@ export interface StringList extends Gio2_.ListModel {
 }
 
 export enum ApplicationInhibitFlags {
-  LOGOUT,
-  SWITCH,
-  SUSPEND,
-  IDLE,
+  LOGOUT = 1,
+  SWITCH = 2,
+  SUSPEND = 4,
+  IDLE = 8,
 }

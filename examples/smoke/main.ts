@@ -1,11 +1,11 @@
 // port of https://github.com/Taiko2k/GTK4PythonTutorial
 
 import {
-  Adw1_ as Adw_,
-  Gdk4_ as Gdk_,
-  Gio2_ as Gio_,
-  GLib2_ as GLib_,
-  Gtk4_ as Gtk_,
+  type Adw1_ as Adw_,
+  type Gdk4_ as Gdk_,
+  type Gio2_ as Gio_,
+  type GLib2_ as GLib_,
+  type Gtk4_ as Gtk_,
   kw,
   NamedArgument,
   python,
@@ -46,8 +46,7 @@ class MainWindow extends Gtk.ApplicationWindow {
   #popover;
   #hamburger;
   #dw;
-  // deno-lint-ignore no-explicit-any
-  #blobs: any[][];
+  #blobs: number[][];
   // #about: Gtk_.AboutDialog | undefined;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
@@ -211,7 +210,7 @@ class MainWindow extends Gtk.ApplicationWindow {
 
       c.set_source_rgb(1, 0, 1);
       for (const [x, y] of this.#blobs) {
-        c.arc(x, y, 10, 0, 2 * 3.1415926);
+        c.arc(x, y, 10, 0, 2 * Math.PI);
         c.fill();
       }
 

@@ -1,8 +1,8 @@
 import {
-  Adw1_ as Adw_,
-  Gtk4_ as Gtk_,
+  type Adw1_ as Adw_,
+  type Gtk4_ as Gtk_,
   kw,
-  NamedArgument,
+  type NamedArgument,
   python,
 } from "../../mod.ts";
 

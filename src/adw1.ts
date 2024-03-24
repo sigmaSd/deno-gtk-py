@@ -117,13 +117,13 @@ export interface StyleManager {
 }
 
 export enum ResponseAppearance {
-  DEFAULT,
-  SUGGESTED,
-  DESTRUCTIVE,
+  DEFAULT = 0,
+  SUGGESTED = 1,
+  DESTRUCTIVE = 2,
 }
 
 export enum ColorScheme {
-  DEFAULT,
-  FORCE_LIGHT,
-  FORCE_DARK,
+  DEFAULT = 0,
+  FORCE_LIGHT = 1,
+  FORCE_DARK = 4,
 }
