@@ -7,8 +7,8 @@ Wrapper + types over Gtk using deno-python
 ```ts
 #!/usr/bin/env -S deno run --allow-ffi --allow-env=DENO_PYTHON_PATH --unstable-ffi
 import {
-  Adw1_ as Adw_,
-  Gtk4_ as Gtk_,
+  type Adw1_ as Adw_,
+  type Gtk4_ as Gtk_,
   kw,
   NamedArgument,
   python,
