@@ -1,24 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write=./README.md --allow-run=git --allow-env
-import * as semver from "https://deno.land/std@0.212.0/semver/mod.ts";
-import $ from "https://deno.land/x/dax@0.36.0/mod.ts";
-
-async function getNewTag() {
-  const tag = await $`git tag`.lines().then((lines) =>
-    lines.reduce((pV, cV) => {
-      const semCv = semver.parse(cV);
-      const semPv = semver.parse(pV);
-      return semver.gt(semCv, semPv) ? cV : pV;
-    })
-  );
-  return getNextMinorVersion(tag);
-}
-
-function getNextMinorVersion(currentVersion: string) {
-  const versionArray = currentVersion.split(".").map(Number);
-  versionArray[2]++;
-  const nextVersion = versionArray.join(".");
-  return nextVersion;
-}
+import $ from "jsr:@david/dax@0.41.0";
+import metaData from "../deno.json" with { type: "json" };
 
 function addVersionToReadme(newTag: string) {
   let readme = Deno.readTextFileSync("./README.md");
@@ -27,13 +9,17 @@ function addVersionToReadme(newTag: string) {
 }
 
 if (import.meta.main) {
-  const newTag = await getNewTag();
-  addVersionToReadme(newTag);
+  const version = metaData.version;
+  if (!confirm(`Creating version: ${version}`)) {
+    Deno.exit(1);
+  }
+  addVersionToReadme(version);
+
   $.setPrintCommand(true);
   await $`git add .`;
   await $`git commit -m "add new apis"`;
-  await $`git tag -a ${newTag} -m "add new apis"`;
-  if (confirm("push to remote?")) {
+  await $`git tag -a ${version} -m "add new apis"`;
+  if (confirm("Push to remote?")) {
     await $`git push --follow-tags`;
   }
 }
