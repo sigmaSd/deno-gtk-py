@@ -74,6 +74,7 @@ export interface StyleContext {
 export interface CssProvider {
   load_from_file(file: Gio2_.File): void;
   load_from_path(path: string): void;
+  load_from_data(data: string): void;
 }
 export interface Window extends Widget {
   hide: () => void;
