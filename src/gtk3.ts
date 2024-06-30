@@ -1,4 +1,4 @@
-import type { Callback, NamedArgument } from "@denosaurs/python";
+import type { Callback, NamedArgument } from "jsr:@denosaurs/python@0.4.3";
 
 export interface Gtk {
   MenuItem(kwArg: NamedArgument): MenuItem;

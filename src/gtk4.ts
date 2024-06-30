@@ -9,6 +9,7 @@ import type {
 } from "../mod.ts";
 
 export interface Gtk {
+  Picture(): Picture;
   Builder(): Builder;
   GestureClick: GestureClick;
   DrawingArea(): DrawingArea;
@@ -44,6 +45,12 @@ export interface Gtk {
   ApplicationWindow: ApplicationWindowConstructor;
   FileDialog: FileDialog;
   StringList: { new: (strings: string[]) => StringList };
+  DropTarget: {
+    new: (
+      type: GObject2_.GType | Gio2_.File,
+      actions: Gdk4_.DragAction,
+    ) => DropTarget;
+  };
 }
 
 export type Application = PythonConvertible;
@@ -99,6 +106,8 @@ export interface Widget extends GObject2_.Object {
   set_css_classes(classes: string[]): void;
   set_tooltip_text(text: string): void;
   set_visible(visible: boolean): void;
+  set_size_request(width: number, height: number): void;
+  add_controller(controller: EventController): void;
 }
 
 export interface FileDialog extends Widget {
@@ -182,6 +191,7 @@ export interface Scale extends Widget {
 export interface Label extends Widget {
   get_label(): { valueOf: () => string };
   set_label(label: string): void;
+  set_text(label: string): void;
 }
 
 export interface ToggleButton extends Button {
@@ -199,7 +209,6 @@ export interface CheckButton extends Widget {
 }
 export interface DrawingArea extends Widget {
   queue_draw(): void;
-  add_controller(evk: GestureClick): void;
   set_draw_func(callback: Callback): void;
   set_vexpand(arg0: boolean): void;
   set_hexpand(arg0: boolean): void;
@@ -219,6 +228,12 @@ export interface ShortcutsShortcut extends Widget {
 
 // deno-lint-ignore no-empty-interface
 export interface StringList extends Gio2_.ListModel {
+}
+
+export interface EventController extends GObject2_.Object {
+}
+
+export interface DropTarget extends EventController {
 }
 
 export enum ApplicationInhibitFlags {
