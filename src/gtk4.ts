@@ -42,7 +42,9 @@ export interface Gtk {
   STYLE_PROVIDER_PRIORITY_APPLICATION: number;
   StyleContext: StyleContext;
   CssProvider(): CssProvider;
-  ApplicationWindow: ApplicationWindowConstructor;
+  ApplicationWindow: {
+    new (kwArg: NamedArgument): ApplicationWindow;
+  };
   FileDialog: FileDialog;
   StringList: { new: (strings: string[]) => StringList };
   DropTarget: {
@@ -66,14 +68,12 @@ export interface StyleContext {
     provider: CssProvider,
     proiority: number,
   ): void;
+  add_class(class_name: string): void;
 }
 
 export interface CssProvider {
   load_from_file(file: Gio2_.File): void;
   load_from_path(path: string): void;
-}
-export interface ApplicationWindowConstructor {
-  new (kwArg: NamedArgument): ApplicationWindow;
 }
 export interface Window extends Widget {
   hide: () => void;
@@ -108,6 +108,7 @@ export interface Widget extends GObject2_.Object {
   set_visible(visible: boolean): void;
   set_size_request(width: number, height: number): void;
   add_controller(controller: EventController): void;
+  get_style_context(): StyleContext;
 }
 
 export interface FileDialog extends Widget {
@@ -215,6 +216,7 @@ export interface DrawingArea extends Widget {
 }
 export interface Picture extends Widget {
   set_filename(filename: string): void;
+  set_keep_aspect_ratio(keep_aspect_ratio: boolean): void;
 }
 export interface Image extends Widget {
   set_from_icon_name(iconName: string): void;
