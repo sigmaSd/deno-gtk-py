@@ -11,6 +11,7 @@ export interface Gdk {
   ModifierType: {
     CONTROL_MASK: ModifierType;
   };
+  ContentProvider: ContentProvider;
 }
 
 export interface Display {
