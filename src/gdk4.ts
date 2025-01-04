@@ -1,4 +1,4 @@
-import { Callback, Gio2_ as Gio } from "../mod.ts";
+import type { Callback, Gio2_ as Gio, GLib2_ as GLib } from "../mod.ts";
 
 export interface Gdk {
   Display: Display;
@@ -44,6 +44,11 @@ export interface Clipboard {
     callback: Callback,
   ) => void;
   read_texture_finish: (result: Gio.AsyncResult) => Texture;
+  set_content(provider: ContentProvider): boolean;
+}
+
+export interface ContentProvider {
+  new_for_bytes(mime_type: string, bytes: GLib.Bytes): ContentProvider;
 }
 
 export enum ModifierType {
