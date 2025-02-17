@@ -1,6 +1,6 @@
 {
   "name": "@sigma/gtk-py",
-  "version": "0.4.27",
+  "version": "0.4.28",
   "exports": "./mod.ts",
   "tasks": {
     "run": "deno run --unstable-ffi -A",
@@ -9,6 +9,6 @@
     "example:builder": "deno task run examples/builder/main.ts"
   },
   "imports": {
-    "@denosaurs/python":"jsr:@denosaurs/python@0.4.3"
+    "@denosaurs/python": "jsr:@denosaurs/python@0.4.4"
   }
 }
