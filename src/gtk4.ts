@@ -95,7 +95,6 @@ export interface Window extends Widget {
   set_modal(modal: boolean): void;
   set_hide_on_close(yes: boolean): void;
 }
-// deno-lint-ignore no-empty-interface
 export interface ShortcutsWindow extends Window {
 }
 export interface ApplicationWindow extends Window {
@@ -143,7 +142,7 @@ export interface Builder {
   get_object<T>(object: string): T;
   add_from_file(file: string): void;
 }
-export interface GestureClick {
+export interface GestureClick extends EventController {
   connect(arg0: string, dw_click: Callback): void;
   new: () => GestureClick;
 }
@@ -242,7 +241,6 @@ export interface ShortcutsShortcut extends Widget {
   props: { title: string };
 }
 
-// deno-lint-ignore no-empty-interface
 export interface StringList extends Gio2_.ListModel {
 }
 

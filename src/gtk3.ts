@@ -1,4 +1,4 @@
-import type { Callback, NamedArgument } from "jsr:@denosaurs/python@0.4.3";
+import type { Callback, NamedArgument } from "@denosaurs/python";
 
 export interface Gtk {
   MenuItem(kwArg: NamedArgument): MenuItem;
@@ -23,6 +23,5 @@ export interface Menu extends MenuShell {
   remove(item: Widget): void;
 }
 
-// deno-lint-ignore no-empty-interface
 export interface MenuItem extends Widget {
 }

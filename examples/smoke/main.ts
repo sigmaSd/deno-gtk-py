@@ -302,8 +302,10 @@ class MainWindow extends Gtk.ApplicationWindow {
           console.log(`File path is ${file.get_path().valueOf()}`);
         }
       } catch (error) {
-        if ("message" in error) {
+        if (error instanceof Error) {
           console.error(`Error opening file: ${error.message}`);
+        } else {
+          console.error(`An unexpected error occurred: ${error}`);
         }
       }
     },
