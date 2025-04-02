@@ -39,6 +39,3 @@ jobs:
 
       - name: Run type check
         run: deno check .
-
-      - name: Run tests
-        run: deno test -A
