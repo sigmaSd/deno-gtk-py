@@ -12,7 +12,7 @@ import {
   kw,
   NamedArgument,
   python,
-} from "jsr:@sigma/gtk-py"
+} from "jsr:@sigma/gtk-py";
 
 const gi = python.import("gi");
 gi.require_version("Gtk", "4.0");
@@ -78,5 +78,6 @@ Check out the examples directory
 - https://github.com/sigmaSd/chrono
 
 ## References
-  - python gtk4 docs: http://lazka.github.io/pgi-docs/
-  - gtk4 docs: https://docs.gtk.org/gtk4/
+
+- python gtk4 docs: http://lazka.github.io/pgi-docs/
+- gtk4 docs: https://docs.gtk.org/gtk4/
