@@ -1,6 +1,6 @@
 import type { GLib2_ } from "../mod.ts";
 
-export interface CustomEventLoopOptions {
+export interface DenoGLibEventLoopOptions {
   /**
    * Poll interval in milliseconds for checking GLib events.
    * Lower values provide better responsiveness but use more CPU.
@@ -10,23 +10,19 @@ export interface CustomEventLoopOptions {
 }
 
 /**
- * Creates a custom event loop that integrates GLib's MainContext with Deno's event loop.
+ * Event loop that integrates GLib's MainContext with Deno's event loop.
  *
  * By default, using `app.run()` blocks Deno's event loop because GLib's MainContext
- * takes control of the main thread. This custom event loop provides a workaround
+ * takes control of the main thread. This event loop provides a workaround
  * by polling GLib events at regular intervals while allowing Deno's event loop
  * to continue running.
  *
  * Instead of using `app.run()`, use `app.register()` and `app.activate()` with this
- * custom event loop to maintain non-blocking behavior.
- *
- * @param GLib - The GLib module imported from gi.repository
- * @param options - Configuration options for the event loop
- * @returns An object with start() and stop() methods to control the event loop
+ * event loop to maintain non-blocking behavior.
  *
  * @example
  * ```ts
- * import { python, createCustomEventLoop } from "jsr:@sigma/gtk-py";
+ * import { python, DenoGLibEventLoop } from "jsr:@sigma/gtk-py";
  *
  * const gi = python.import("gi");
  * gi.require_version("Gtk", "4.0");
@@ -39,7 +35,7 @@ export interface CustomEventLoopOptions {
  * app.register();
  * app.activate();
  *
- * const eventLoop = createCustomEventLoop(GLib, { pollInterval: 1 });
+ * const eventLoop = new DenoGLibEventLoop(GLib, { pollInterval: 1 });
  * eventLoop.start();
  *
  * // Your Deno code continues to work normally
@@ -48,62 +44,60 @@ export interface CustomEventLoopOptions {
  * }, 1000);
  * ```
  */
-export function createCustomEventLoop(
-  GLib: GLib2_.GLib,
-  options: CustomEventLoopOptions = {},
-) {
-  const { pollInterval = 1 } = options;
+export class DenoGLibEventLoop {
+  private intervalId: number | null = null;
+  private _isRunning = false;
+  private readonly mainContext: GLib2_.MainContext;
+  private readonly _pollInterval: number;
 
-  let intervalId: number | null = null;
-  let isRunning = false;
+  constructor(GLib: GLib2_.GLib, options: DenoGLibEventLoopOptions = {}) {
+    this._pollInterval = options.pollInterval ?? 1;
+    this.mainContext = GLib.MainContext.default();
+  }
 
-  const mainContext = GLib.MainContext.default();
+  /**
+   * Starts the Deno-GLib event loop.
+   * This will begin polling GLib events at the specified interval.
+   */
+  start(): void {
+    if (this._isRunning) {
+      return;
+    }
 
-  return {
-    /**
-     * Starts the custom event loop.
-     * This will begin polling GLib events at the specified interval.
-     */
-    start() {
-      if (isRunning) {
-        return;
+    this._isRunning = true;
+    this.intervalId = setInterval(() => {
+      // Process all pending GLib events
+      while (this.mainContext.pending().valueOf()) {
+        this.mainContext.iteration(false);
       }
+    }, this._pollInterval);
+  }
 
-      isRunning = true;
-      intervalId = setInterval(() => {
-        // Process all pending GLib events
-        while (mainContext.pending().valueOf()) {
-          mainContext.iteration(false);
-        }
-      }, pollInterval);
-    },
+  /**
+   * Stops the Deno-GLib event loop.
+   * This will stop polling GLib events and clear the interval.
+   */
+  stop(): void {
+    if (!this._isRunning || this.intervalId === null) {
+      return;
+    }
 
-    /**
-     * Stops the custom event loop.
-     * This will stop polling GLib events and clear the interval.
-     */
-    stop() {
-      if (!isRunning || intervalId === null) {
-        return;
-      }
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+    this._isRunning = false;
+  }
 
-      clearInterval(intervalId);
-      intervalId = null;
-      isRunning = false;
-    },
+  /**
+   * Returns whether the event loop is currently running.
+   */
+  get isRunning(): boolean {
+    return this._isRunning;
+  }
 
-    /**
-     * Returns whether the event loop is currently running.
-     */
-    get isRunning() {
-      return isRunning;
-    },
-
-    /**
-     * Returns the current poll interval in milliseconds.
-     */
-    get pollInterval() {
-      return pollInterval;
-    },
-  };
+  /**
+   * Returns the current poll interval in milliseconds.
+   */
+  get pollInterval(): number {
+    return this._pollInterval;
+  }
 }

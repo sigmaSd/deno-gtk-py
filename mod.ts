@@ -71,10 +71,10 @@ Check out the examples directory
   this, for example `setTimeout` wont work in a python.callback after running
   Gtk.Applicaiton. The solution is to use the primitives that GLib provides, for
   example instead of `setTimeout`, use `GLib.add_timeout`
-- **Alternative**: Use the `createCustomEventLoop()` utility to integrate GLib's
+- **Alternative**: Use the `DenoGLibEventLoop` class to integrate GLib's
   event loop with Deno's event loop without blocking. This allows you to use
   `setTimeout`, `fetch`, and other Deno APIs normally. Instead of `app.run()`,
-  use `app.register()` + `app.activate()` with the custom event loop.
+  use `app.register()` + `app.activate()` with the event loop integration.
 - For running async subprocess checkout `Gio.Subprocess`
 
 ## Random apps made with it
@@ -100,5 +100,5 @@ export * as GLib2_ from "./src/glib2.ts";
 export * as GObject2_ from "./src/gobject2.ts";
 export * as AppIndicator3 from "./src/appindicator3.ts";
 
-export { createCustomEventLoop } from "./src/eventloop.ts";
-export type { CustomEventLoopOptions } from "./src/eventloop.ts";
+export { DenoGLibEventLoop } from "./src/eventloop.ts";
+export type { DenoGLibEventLoopOptions } from "./src/eventloop.ts";

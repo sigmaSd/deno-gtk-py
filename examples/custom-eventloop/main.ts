@@ -2,7 +2,7 @@
 
 import {
   type Adw1_ as Adw_,
-  createCustomEventLoop,
+  DenoGLibEventLoop,
   type GLib2_ as GLib_,
   type Gtk4_ as Gtk_,
   kw,
@@ -30,6 +30,7 @@ class MainWindow extends Gtk.ApplicationWindow {
     const box = Gtk.Box(
       new NamedArgument("orientation", Gtk.Orientation.VERTICAL),
     );
+    box.set_spacing(10);
 
     // Create a label to show the counter
     const label = Gtk.Label(kw`label=${"Counter: 0"}`);
@@ -73,12 +74,12 @@ const app = new App(kw`application_id=${"com.example.custom-eventloop"}`);
 app.register();
 app.activate();
 
-// Create and start the custom event loop
-const eventLoop = createCustomEventLoop(GLib, { pollInterval: 5 });
+// Create and start the Deno-GLib event loop
+const eventLoop = new DenoGLibEventLoop(GLib, { pollInterval: 1 });
 eventLoop.start();
 
 // Now Deno's event loop is not blocked, so we can use setTimeout, setInterval, etc.
-console.log("Application started with custom event loop");
+console.log("Application started with Deno-GLib event loop integration");
 
 // Demonstrate that Deno's event loop is working
 let denoCounter = 0;
@@ -104,7 +105,10 @@ async function asyncDemo() {
     const zen = await response.text();
     console.log(`GitHub Zen: ${zen}`);
   } catch (error) {
-    console.log("Failed to fetch GitHub Zen:", error);
+    console.log(
+      "Failed to fetch GitHub Zen:",
+      error instanceof Error ? error.message : String(error),
+    );
   }
 }
 
@@ -118,5 +122,7 @@ Deno.addSignalListener("SIGINT", () => {
 });
 
 console.log("Try clicking the button in the GTK window!");
-console.log("Notice how both GTK events and Deno timers work simultaneously.");
+console.log(
+  "Notice how both GTK events and Deno timers work simultaneously with Deno-GLib integration.",
+);
 console.log("Press Ctrl+C to exit gracefully.");
