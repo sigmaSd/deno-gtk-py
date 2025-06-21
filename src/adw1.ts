@@ -61,7 +61,7 @@ export interface Application extends PyObject {
   uninhibit(cookie: number): void;
   //FIXME: args type
   run: (args: string[]) => void;
-  connect: (signal: "activate", callback: Callback) => void;
+  connect: (signal: "activate" | "window-removed", callback: Callback) => void;
   //FIXME: PythonConvertible should not be needed
   // it should be ApplicaitonWindow
   get_active_window: () => PythonConvertible;
