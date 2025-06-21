@@ -24,6 +24,7 @@ export interface Gtk {
   ToggleButton(kwArg?: NamedArgument): ToggleButton;
   Button: (kwArg: NamedArgument) => Button;
   CheckButton(arg0: NamedArgument): CheckButton;
+  DropDown(kwArg?: NamedArgument): DropDown;
   Orientation: {
     HORIZONTAL: PythonConvertible;
     VERTICAL: PythonConvertible;
@@ -220,6 +221,22 @@ export interface CheckButton extends Widget {
   get_active(): { valueOf: () => boolean };
   set_group(group: CheckButton): void;
   connect: (signal: "toggled", callback: Callback) => void;
+}
+export interface DropDown extends Widget {
+  set_model(model: Gio2_.ListModel): void;
+  get_selected(): { valueOf: () => number };
+  set_selected(position: number): void;
+  get_selected_item(): GObject2_.Object;
+  // deno-lint-ignore no-explicit-any
+  set_factory(factory: any): void;
+  // deno-lint-ignore no-explicit-any
+  set_list_factory(factory: any): void;
+  // deno-lint-ignore no-explicit-any
+  set_header_factory(factory: any): void;
+  set_enable_search(enable_search: boolean): void;
+  // deno-lint-ignore no-explicit-any
+  set_expression(expression: any): void;
+  connect(signal: "notify::selected", callback: Callback): void;
 }
 export interface DrawingArea extends Widget {
   queue_draw(): void;
