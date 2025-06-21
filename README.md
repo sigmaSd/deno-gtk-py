@@ -62,7 +62,7 @@ app.run(Deno.args);
 
 Check out the examples directory
 
-![image](https://github.com/sigmaSd/0.4.10/22427111/cd8a4a23-4ef2-4185-b57a-94de1494cbdb)
+![image](https://github.com/sigmaSd/deno-gtk-py/assets/22427111/cd8a4a23-4ef2-4185-b57a-94de1494cbdb)
 
 ## Tips
 
@@ -70,6 +70,10 @@ Check out the examples directory
   this, for example `setTimeout` wont work in a python.callback after running
   Gtk.Applicaiton. The solution is to use the primitives that GLib provides, for
   example instead of `setTimeout`, use `GLib.add_timeout`
+- **Alternative**: Use the `DenoGLibEventLoop` class to integrate GLib's event
+  loop with Deno's event loop without blocking. This allows you to use
+  `setTimeout`, `fetch`, and other Deno APIs normally. Instead of `app.run()`,
+  use `app.register()` + `app.activate()` with the event loop integration.
 - For running async subprocess checkout `Gio.Subprocess`
 
 ## Random apps made with it
