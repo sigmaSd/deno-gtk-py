@@ -1,7 +1,7 @@
 # Deno-GLib Event Loop Integration Example
 
-This example demonstrates how to use the Deno-GLib event loop integration utility to integrate
-GLib's MainContext with Deno's event loop without blocking.
+This example demonstrates how to use the Deno-GLib event loop integration
+utility to integrate GLib's MainContext with Deno's event loop without blocking.
 
 ## The Problem
 
