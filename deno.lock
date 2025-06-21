@@ -1,8 +1,9 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@david/dax@0.41.0": "0.41.0",
     "jsr:@david/which@~0.4.1": "0.4.1",
+    "jsr:@denosaurs/python@*": "0.4.4",
     "jsr:@denosaurs/python@0.4.3": "0.4.3",
     "jsr:@denosaurs/python@0.4.4": "0.4.4",
     "jsr:@std/assert@0.221": "0.221.0",

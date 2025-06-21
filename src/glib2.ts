@@ -1,5 +1,10 @@
 import type { Callback } from "../mod.ts";
 
+export interface MainContext {
+  pending(): { valueOf(): boolean };
+  iteration(may_block: boolean): boolean;
+}
+
 export interface GLib {
   PRIORITY_HIGH: number;
   PRIORITY_DEFAULT: number;
@@ -10,6 +15,9 @@ export interface GLib {
     callback: Callback,
   ): { valueOf: () => number };
   idle_add(callback: Callback): void;
+  MainContext: {
+    default(): MainContext;
+  };
   Bytes: {
     new (data: number[]): Bytes;
   };

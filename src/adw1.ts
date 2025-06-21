@@ -66,6 +66,8 @@ export interface Application extends PyObject {
   // it should be ApplicaitonWindow
   get_active_window: () => PythonConvertible;
   quit: () => void;
+  register(): void;
+  activate(): void;
 }
 
 export interface PreferencesPage extends Gtk4_.Widget {
