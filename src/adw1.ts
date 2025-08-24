@@ -24,8 +24,14 @@ export interface Adw {
   MessageDialog(...kwArg: NamedArgument[]): MessageDialog;
   AboutWindow(kwArg: NamedArgument): AboutWindow;
   Application: ApplicationConstructor;
+  ApplicationWindow: { new (kwArg?: NamedArgument): ApplicationWindow };
   StyleManager: { get_default(): StyleManager };
+  ToolbarView: () => ToolbarView;
+  HeaderBar: () => HeaderBar;
   run: () => void;
+}
+export interface ApplicationWindow extends Gtk4_.Window {
+  set_content(widget: Gtk4_.Widget): void;
 }
 export interface AboutWindow {
   set_designers(designers: string[]): void;
@@ -116,6 +122,15 @@ export interface MessageDialog extends Gtk4_.Window {
 
 export interface StyleManager {
   set_color_scheme: (scheme: ColorScheme) => void;
+}
+
+export interface HeaderBar extends Gtk4_.Widget {
+  pack_start(widget: Gtk4_.Widget): void;
+}
+
+export interface ToolbarView extends Gtk4_.Widget {
+  add_top_bar(widget: Gtk4_.Widget): void;
+  set_content(widget: Gtk4_.Widget): void;
 }
 
 export enum ResponseAppearance {

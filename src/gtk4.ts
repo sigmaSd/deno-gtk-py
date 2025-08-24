@@ -98,6 +98,8 @@ export interface Window extends Widget {
   set_transient_for(parent: ApplicationWindow): void;
   set_modal(modal: boolean): void;
   set_hide_on_close(yes: boolean): void;
+  set_title(title: string): void;
+  set_default_size(width: number, height: number): void;
 }
 export interface ShortcutsWindow extends Window {
 }
