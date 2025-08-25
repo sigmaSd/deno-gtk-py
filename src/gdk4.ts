@@ -8,8 +8,15 @@ export interface Gdk {
   KEY_v: {
     valueOf(): number;
   };
+  KEY_o: {
+    valueOf(): number;
+  };
+  KEY_t: {
+    valueOf(): number;
+  };
   ModifierType: {
     CONTROL_MASK: ModifierType;
+    SHIFT_MASK: ModifierType;
   };
   ContentProvider: ContentProvider;
 }

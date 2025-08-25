@@ -121,7 +121,7 @@ class MainWindow extends Gtk.ApplicationWindow {
     this.#open_button.set_icon_name("document-open-symbolic");
     this.#open_button.connect("clicked", this.show_open_dialog);
 
-    this.#open_dialog = Gtk.FileDialog.new();
+    this.#open_dialog = Gtk.FileDialog();
     this.#open_dialog.set_title("Select a File");
 
     const f = Gtk.FileFilter();

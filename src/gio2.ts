@@ -31,7 +31,7 @@ export interface ListStore {
   //FIXME: Gio.ListStore.new(Gtk.FileFilter)
   // takes a type instead of a value
   // deno-lint-ignore no-explicit-any
-  new: (filter: any) => ListStore;
+  new: (filter?: any) => ListStore;
   append(f: Gtk4_.FileFilter): void;
 }
 

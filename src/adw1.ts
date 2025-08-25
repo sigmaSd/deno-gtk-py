@@ -1,6 +1,7 @@
 import type {
   Callback,
   Gio2_,
+  GObject2_,
   Gtk4_,
   NamedArgument,
   PyObject,
@@ -50,7 +51,7 @@ export interface AboutWindow {
   set_application_name(name: string): void;
 }
 
-export interface ApplicationConstructor {
+export interface ApplicationConstructor extends GObject2_.Object {
   new (kwArg: NamedArgument): Application;
 }
 

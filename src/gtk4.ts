@@ -49,7 +49,7 @@ export interface Gtk {
   ApplicationWindow: {
     new (kwArg: NamedArgument): ApplicationWindow;
   };
-  FileDialog: FileDialog;
+  FileDialog(): FileDialog;
   StringList: { new: (strings: string[]) => StringList };
   DropTarget: {
     new: (
@@ -76,6 +76,7 @@ export type Application = PythonConvertible;
 export interface FileFilter {
   set_name(name: string): void;
   add_mime_type(type: "image/jpeg" | "image/png" | string): void;
+  add_pattern(pattern: string): void;
 }
 
 export interface StyleContext {
@@ -85,6 +86,7 @@ export interface StyleContext {
     proiority: number,
   ): void;
   add_class(class_name: string): void;
+  remove_class(class_name: string): void;
 }
 
 export interface CssProvider {
@@ -136,13 +138,16 @@ export interface FileDialog extends Widget {
   // deno-lint-ignore no-explicit-any
   open_finish(result: any): Gio2_.File;
   open(
-    window: ApplicationWindow,
+    window: Window,
     // deno-lint-ignore no-explicit-any
     cancellable: any,
     callback: Callback,
   ): void;
   new: () => FileDialog;
   set_title(title: string): void;
+  // deno-lint-ignore no-explicit-any
+  select_folder(parent: Window, cancellable: any, callback: Callback): void;
+  select_folder_finish(result: Gio2_.AsyncResult): Gio2_.File;
 }
 export interface Builder {
   get_object<T>(object: string): T;
