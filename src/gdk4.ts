@@ -11,6 +11,9 @@ export interface Gdk {
   KEY_o: {
     valueOf(): number;
   };
+  KEY_r: {
+    valueOf(): number;
+  };
   KEY_t: {
     valueOf(): number;
   };
