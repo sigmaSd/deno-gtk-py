@@ -152,6 +152,7 @@ export interface FileDialog extends Widget {
 export interface Builder {
   get_object<T>(object: string): T;
   add_from_file(file: string): void;
+  add_from_string(str: string): void;
 }
 export interface GestureClick extends EventController {
   connect(arg0: string, dw_click: Callback): void;
