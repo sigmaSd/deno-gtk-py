@@ -14,6 +14,11 @@ export interface GLib {
     milliseconds: number,
     callback: Callback,
   ): { valueOf: () => number };
+  timeout_add_seconds(
+    seconds: number,
+    callback: Callback,
+  ): { valueOf: () => number };
+  source_remove(source_id: number): void;
   idle_add(callback: Callback): void;
   MainContext: {
     default(): MainContext;
