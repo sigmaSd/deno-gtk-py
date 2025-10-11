@@ -9,6 +9,7 @@ import type {
 } from "../mod.ts";
 
 export interface Adw {
+  ActionRow(): ActionRow;
   ResponseAppearance: {
     DEFAULT: ResponseAppearance.DEFAULT;
     SUGGESTED: ResponseAppearance.SUGGESTED;
@@ -89,11 +90,12 @@ export interface PreferencesGroup extends Gtk4_.Widget {
   add(child: Gtk4_.Widget): void;
 }
 
-export interface PreferencesRow extends Gtk4_.Widget {
+export interface PreferencesRow extends Gtk4_.ListBoxRow {
   set_title(title: string): void;
 }
 
 export interface ActionRow extends PreferencesRow {
+  add_suffix(widget: Gtk4_.Widget): void;
   set_subtitle(subtitle: string): void;
 }
 
@@ -132,6 +134,10 @@ export interface HeaderBar extends Gtk4_.Widget {
 export interface ToolbarView extends Gtk4_.Widget {
   add_top_bar(widget: Gtk4_.Widget): void;
   set_content(widget: Gtk4_.Widget): void;
+}
+
+export interface ActionRow extends PreferencesRow {
+  set_subtitle(subtitle: string): void;
 }
 
 export enum ResponseAppearance {

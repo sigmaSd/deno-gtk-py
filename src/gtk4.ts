@@ -9,6 +9,8 @@ import type {
 } from "../mod.ts";
 
 export interface Gtk {
+  ListBox(): ListBox;
+  ScrolledWindow(): ScrolledWindow;
   Picture(): Picture;
   Builder(): Builder;
   GestureClick: GestureClick;
@@ -18,19 +20,24 @@ export interface Gtk {
   HeaderBar(): HeaderBar;
   Scale(): Scale;
   PopoverMenu(): PopoverMenu;
-  Label(kwArg: NamedArgument): Label;
+  Label(kwArg?: NamedArgument): Label;
   Switch(): Switch;
-  Box: (kwArg: NamedArgument) => Box;
+  Box: (kwArg?: NamedArgument) => Box;
   ToggleButton(kwArg?: NamedArgument): ToggleButton;
-  Button: (kwArg: NamedArgument) => Button;
+  Button: (kwArg?: NamedArgument) => Button;
   CheckButton(arg0: NamedArgument): CheckButton;
   DropDown: {
     (kwArg?: NamedArgument): DropDown;
     new_from_strings(strings: string[]): DropDown;
   };
+  SelectionMode: {
+    NONE: SelectionMode;
+    SINGLE: SelectionMode;
+    MULTIPLE: SelectionMode;
+  };
   Orientation: {
-    HORIZONTAL: PythonConvertible;
-    VERTICAL: PythonConvertible;
+    HORIZONTAL: Orientation;
+    VERTICAL: Orientation;
   };
   License: {
     MIT_X11: never;
@@ -47,7 +54,7 @@ export interface Gtk {
   StyleContext: StyleContext;
   CssProvider(): CssProvider;
   ApplicationWindow: {
-    new (kwArg: NamedArgument): ApplicationWindow;
+    new (kwArg?: NamedArgument): ApplicationWindow;
   };
   FileDialog(): FileDialog;
   StringList: { new: (strings: string[]) => StringList };
@@ -123,7 +130,20 @@ export interface ApplicationWindow extends Window {
 }
 
 export interface Widget extends GObject2_.Object {
+  get_next_sibling(): Widget;
+  get_first_child(): Widget;
+  set_hexpand(expand: boolean): void;
+  set_vexpand(expand: boolean): void;
+  set_margin_top(top: number): void;
+  set_margin_bottom(bottom: number): void;
+  set_margin_start(start: number): void;
+  set_margin_end(end: number): void;
+  set_valign(align: Align): void;
+  set_xalign(align: Align): void;
+  set_opacity(opacity: number): void;
+  add_css_class(klass: string): void;
   set_css_classes(classes: string[]): void;
+  remove_css_class(klass: string): void;
   set_tooltip_text(text: string): void;
   set_visible(visible: boolean): void;
   set_size_request(width: number, height: number): void;
@@ -178,6 +198,7 @@ export interface AboutDialog extends Widget {
   set_transient_for(window: ApplicationWindow): void;
 }
 export interface Box extends Widget {
+  set_orientation(orientation: Orientation): unknown;
   set_homogeneous(yes: boolean): void;
   set_margin_end(margin: number): void;
   set_margin_start(margin: number): void;
@@ -194,6 +215,7 @@ export interface MenuButton extends Widget {
 }
 
 export interface HeaderBar extends Widget {
+  pack_end(widget: Widget): void;
   pack_start(widget: Widget): void;
 }
 
@@ -215,15 +237,21 @@ export interface Scale extends Widget {
 }
 
 export interface Label extends Widget {
+  // Pango Attr
+  // deno-lint-ignore no-explicit-any
+  set_attributes(attributes: any): void;
   get_label(): { valueOf: () => string };
   set_label(label: string): void;
   set_text(label: string): void;
 }
 
 export interface ToggleButton extends Button {
+  connect(event: "toggled" | "clicked", callback: Callback): void;
+  set_active(state: boolean): void;
   get_active(): { valueOf: () => boolean };
 }
 export interface Button extends Widget {
+  set_child(btnLabel: Label): void;
   set_icon_name(name: string): void;
   connect(event: "clicked", callback: Callback): void;
   set_label(label: string): void;
@@ -299,4 +327,43 @@ export enum Align {
   BASELINE = 4,
   BASELINE_FILL = 4,
   BASELINE_CENTER = 5,
+}
+
+export interface ListBoxRow extends Widget {
+  set_activatable(activatable: boolean): void;
+}
+
+export interface ScrolledWindow extends Widget {
+  set_child(child: Widget): void;
+}
+
+export interface ListBox extends Widget {
+  append(child: Widget): void;
+  remove(child: Widget): void;
+  set_selection_mode(selection_mode: SelectionMode): void;
+}
+
+export enum SelectionMode {
+  NONE = 0,
+  SINGLE = 1,
+  BROWSE = 2,
+  MULTIPLE = 3,
+}
+
+export enum Orientation {
+  HORIZONTAL = 0,
+  VERTICAL = 1,
+}
+
+export enum License {
+  MIT_X11 = 0,
+  GPL_2_0 = 1,
+  GPL_3_0 = 2,
+  LGPL_2_1 = 3,
+  LGPL_3_0 = 4,
+  MPL_2_0 = 5,
+  BSD_2_CLAUSE = 6,
+  BSD_3_CLAUSE = 7,
+  APACHE_2_0 = 8,
+  NONE = 9,
 }
