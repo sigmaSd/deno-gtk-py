@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import type {
   Adw1_,
   Callback,
@@ -7,6 +8,7 @@ import type {
   NamedArgument,
   PythonConvertible,
 } from "../mod.ts";
+import type { Callback2 } from "./internal_types.ts";
 
 export interface Gtk {
   ListBox(): ListBox;
@@ -125,7 +127,7 @@ export interface ApplicationWindow extends Window {
   set_titlebar: (header: HeaderBar) => void;
   close: () => void;
   add_action(action: Gio2_.SimpleAction): void;
-  connect(signal: "close-request", callback: Callback): void;
+  connect(signal: "close-request", callback: Callback | Callback2): void;
   set_resizable(yes: boolean): void;
 }
 
@@ -155,18 +157,19 @@ export interface Widget extends GObject2_.Object {
 export interface FileDialog extends Widget {
   set_default_filter(f: FileFilter): void;
   set_filters(filters: Gio2_.ListStore): void;
-  // deno-lint-ignore no-explicit-any
   open_finish(result: any): Gio2_.File;
   open(
     window: Window,
-    // deno-lint-ignore no-explicit-any
     cancellable: any,
-    callback: Callback,
+    callback: Callback | Callback2,
   ): void;
   new: () => FileDialog;
   set_title(title: string): void;
-  // deno-lint-ignore no-explicit-any
-  select_folder(parent: Window, cancellable: any, callback: Callback): void;
+  select_folder(
+    parent: Window,
+    cancellable: any,
+    callback: Callback | Callback2,
+  ): void;
   select_folder_finish(result: Gio2_.AsyncResult): Gio2_.File;
 }
 export interface Builder {
@@ -238,7 +241,6 @@ export interface Scale extends Widget {
 
 export interface Label extends Widget {
   // Pango Attr
-  // deno-lint-ignore no-explicit-any
   set_attributes(attributes: any): void;
   get_label(): { valueOf: () => string };
   set_label(label: string): void;
@@ -253,7 +255,7 @@ export interface ToggleButton extends Button {
 export interface Button extends Widget {
   set_child(btnLabel: Label): void;
   set_icon_name(name: string): void;
-  connect(event: "clicked", callback: Callback): void;
+  connect(event: "clicked", callback: Callback | Callback2): void;
   set_label(label: string): void;
 }
 export interface CheckButton extends Widget {
@@ -266,14 +268,10 @@ export interface DropDown extends Widget {
   get_selected(): { valueOf: () => number };
   set_selected(position: number): void;
   get_selected_item(): StringObject;
-  // deno-lint-ignore no-explicit-any
   set_factory(factory: any): void;
-  // deno-lint-ignore no-explicit-any
   set_list_factory(factory: any): void;
-  // deno-lint-ignore no-explicit-any
   set_header_factory(factory: any): void;
   set_enable_search(enable_search: boolean): void;
-  // deno-lint-ignore no-explicit-any
   set_expression(expression: any): void;
   connect(signal: "notify::selected", callback: Callback): void;
 }

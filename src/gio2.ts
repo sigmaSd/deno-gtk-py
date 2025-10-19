@@ -1,4 +1,6 @@
+// deno-lint-ignore-file no-explicit-any
 import type { Callback, GLib2_, Gtk4_ } from "../mod.ts";
+import type { Callback2 } from "./internal_types.ts";
 
 export interface Gio {
   Notification: { new: (title: string) => Notification };
@@ -22,15 +24,13 @@ export interface Menu {
   append(arg0: string, arg1: string): void;
 }
 export interface SimpleAction {
-  // deno-lint-ignore no-explicit-any
   new: (name: string, arg?: any) => SimpleAction;
-  connect(signal: "activate", callback: Callback): void;
+  connect(signal: "activate", callback: Callback | Callback2): void;
 }
 
 export interface ListStore {
   //FIXME: Gio.ListStore.new(Gtk.FileFilter)
   // takes a type instead of a value
-  // deno-lint-ignore no-explicit-any
   new: (filter?: any) => ListStore;
   append(f: Gtk4_.FileFilter): void;
 }
@@ -42,7 +42,6 @@ export interface ListModel {
 export interface File {
   new_for_uri(uri: string): File;
   get_path(): { valueOf: () => string };
-  // deno-lint-ignore no-explicit-any
   load_contents(): [{ valueOf: () => boolean }, any];
 }
 
@@ -71,7 +70,7 @@ export interface InputStream {
     count: number,
     ioPriority: number,
     cancellable: undefined,
-    callback: Callback,
+    callback: Callback | Callback2,
   ): void;
   read_bytes_finish(asyncResult: AsyncResult): GLib2_.Bytes;
 }
@@ -83,7 +82,6 @@ export interface DBusProxy {
   new_for_bus_sync(
     bus_type: BusType,
     flags: DBusProxyFlags,
-    // deno-lint-ignore no-explicit-any
     info: any,
     name: string,
     object_path: string,

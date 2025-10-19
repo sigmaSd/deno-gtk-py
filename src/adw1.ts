@@ -7,6 +7,7 @@ import type {
   PyObject,
   PythonConvertible,
 } from "../mod.ts";
+import type { Callback2 } from "./internal_types.ts";
 
 export interface Adw {
   ActionRow(): ActionRow;
@@ -69,7 +70,10 @@ export interface Application extends PyObject {
   uninhibit(cookie: number): void;
   //FIXME: args type
   run: (args: string[]) => void;
-  connect: (signal: "activate" | "window-removed", callback: Callback) => void;
+  connect: (
+    signal: "activate" | "window-removed",
+    callback: Callback | Callback2,
+  ) => void;
   //FIXME: PythonConvertible should not be needed
   // it should be ApplicaitonWindow
   get_active_window: () => PythonConvertible;
@@ -105,14 +109,17 @@ export interface SwitchRow extends PreferencesRow {
   set_active(yes: boolean): void;
   set_subtitle(subTitle: string): void;
   set_sensitive(yes: boolean): void;
-  connect(event: "state-set" | "notify::active", callback: Callback): void;
+  connect(
+    event: "state-set" | "notify::active",
+    callback: Callback | Callback2,
+  ): void;
 }
 
 export interface ComboRow extends ActionRow {
   get_selected(): { valueOf(): number };
   set_selected(item: number): void;
   set_model(model: Gio2_.ListModel): void;
-  connect(signal: "notify::selected", callback: Callback): void;
+  connect(signal: "notify::selected", callback: Callback | Callback2): void;
 }
 
 export interface MessageDialog extends Gtk4_.Window {
@@ -120,7 +127,7 @@ export interface MessageDialog extends Gtk4_.Window {
   set_response_appearance(id: string, apperance: ResponseAppearance): void;
   set_default_response(id: string): void;
   set_close_response(id: string): void;
-  connect(signal: string, callback: Callback): void;
+  connect(signal: string, callback: Callback | Callback2): void;
 }
 
 export interface StyleManager {

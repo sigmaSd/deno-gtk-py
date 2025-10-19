@@ -1,7 +1,8 @@
 import type { Callback } from "../mod.ts";
+import type { Callback2 } from "./internal_types.ts";
 
 export interface Object extends MyPyObject {
-  connect(signal: string, callback: Callback): void;
+  connect(signal: string, callback: Callback | Callback2): void;
   TYPE_NONE: GType;
 }
 

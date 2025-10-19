@@ -1,4 +1,5 @@
-import type { Callback, NamedArgument } from "jsr:@denosaurs/python@0.4.5";
+import type { Callback, NamedArgument } from "@denosaurs/python";
+import type { Callback2 } from "./internal_types.ts";
 
 export interface Gtk {
   MenuItem(kwArg: NamedArgument): MenuItem;
@@ -9,7 +10,7 @@ export interface Gtk {
 
 export interface Widget {
   show(): void;
-  connect(signal: string, callback: Callback): void;
+  connect(signal: string, callback: Callback | Callback2): void;
 }
 
 export interface MenuShell extends Widget {

@@ -1,4 +1,5 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write=./README.md --allow-run=git --allow-env
+// deno-lint-ignore no-import-prefix
 import $ from "jsr:@david/dax@0.41.0";
 import metaData from "../deno.json" with { type: "json" };
 
