@@ -10,6 +10,8 @@ import type {
 import type { Callback2 } from "./internal_types.ts";
 
 export interface Adw {
+  Clamp(): Clamp;
+  Window(...args: NamedArgument[]): Window;
   ActionRow(): ActionRow;
   ResponseAppearance: {
     DEFAULT: ResponseAppearance.DEFAULT;
@@ -90,6 +92,7 @@ export interface PreferencesWindow extends Gtk4_.Window {
   add(page: PreferencesPage): void;
 }
 export interface PreferencesGroup extends Gtk4_.Widget {
+  set_description(description: string): void;
   set_title(title: string): void;
   add(child: Gtk4_.Widget): void;
 }
@@ -99,6 +102,7 @@ export interface PreferencesRow extends Gtk4_.ListBoxRow {
 }
 
 export interface ActionRow extends PreferencesRow {
+  set_activatable_widget(widget: Gtk4_.Widget): void;
   add_suffix(widget: Gtk4_.Widget): void;
   set_subtitle(subtitle: string): void;
 }
@@ -135,6 +139,7 @@ export interface StyleManager {
 }
 
 export interface HeaderBar extends Gtk4_.Widget {
+  pack_end(widget: Gtk4_.Widget): void;
   pack_start(widget: Gtk4_.Widget): void;
 }
 
@@ -157,4 +162,18 @@ export enum ColorScheme {
   DEFAULT = 0,
   FORCE_LIGHT = 1,
   FORCE_DARK = 4,
+}
+
+export interface Window {
+  set_content(content: Gtk4_.Widget): void;
+  present(): void;
+  close(): void;
+  set_default_size(width: number, height: number): void;
+  set_title(title: string): void;
+  set_modal(yes: boolean): void;
+}
+
+export interface Clamp extends Gtk4_.Widget {
+  set_maximum_size(size: number): void;
+  set_child(child: Gtk4_.Widget): void;
 }

@@ -11,6 +11,10 @@ import type {
 import type { Callback2 } from "./internal_types.ts";
 
 export interface Gtk {
+  Entry(): Entry;
+  Dialog(...args: NamedArgument[]): Dialog;
+  ListBoxRow(): ListBoxRow;
+  Frame(): Frame;
   ListBox(): ListBox;
   ScrolledWindow(): ScrolledWindow;
   Picture(): Picture;
@@ -24,7 +28,7 @@ export interface Gtk {
   PopoverMenu(): PopoverMenu;
   Label(kwArg?: NamedArgument): Label;
   Switch(): Switch;
-  Box: (kwArg?: NamedArgument) => Box;
+  Box: (...kwArg: NamedArgument[]) => Box;
   ToggleButton(kwArg?: NamedArgument): ToggleButton;
   Button: (kwArg?: NamedArgument) => Button;
   CheckButton(arg0: NamedArgument): CheckButton;
@@ -59,7 +63,7 @@ export interface Gtk {
     new (kwArg?: NamedArgument): ApplicationWindow;
   };
   FileDialog(): FileDialog;
-  StringList: { new: (strings: string[]) => StringList };
+  StringList: { new: (strings?: string[]) => StringList };
   DropTarget: {
     new: (
       type: GObject2_.GType | Gio2_.File,
@@ -240,6 +244,10 @@ export interface Scale extends Widget {
 }
 
 export interface Label extends Widget {
+  set_wrap(yes: boolean): void;
+  set_markup(markup: string): void;
+  set_width_chars(width: number): void;
+  set_use_markup(yes: boolean): void;
   // Pango Attr
   set_attributes(attributes: any): void;
   get_label(): { valueOf: () => string };
@@ -253,6 +261,7 @@ export interface ToggleButton extends Button {
   get_active(): { valueOf: () => boolean };
 }
 export interface Button extends Widget {
+  set_sensitive(yes: boolean): void;
   set_child(btnLabel: Label): void;
   set_icon_name(name: string): void;
   connect(event: "clicked", callback: Callback | Callback2): void;
@@ -264,6 +273,7 @@ export interface CheckButton extends Widget {
   connect: (signal: "toggled", callback: Callback) => void;
 }
 export interface DropDown extends Widget {
+  get_model(): any;
   set_model(model: Gio2_.ListModel): void;
   get_selected(): { valueOf: () => number };
   set_selected(position: number): void;
@@ -273,7 +283,7 @@ export interface DropDown extends Widget {
   set_header_factory(factory: any): void;
   set_enable_search(enable_search: boolean): void;
   set_expression(expression: any): void;
-  connect(signal: "notify::selected", callback: Callback): void;
+  connect(signal: "notify::selected", callback: Callback2): void;
 }
 
 export interface StringObject extends GObject2_.Object {
@@ -300,6 +310,10 @@ export interface ShortcutsShortcut extends Widget {
 }
 
 export interface StringList extends Gio2_.ListModel {
+  remove(index: number): void;
+  get_n_items(): { valueOf(): number };
+  get_string(selected: number): { valueOf: () => string };
+  append(arg: string): void;
 }
 
 export interface EventController extends GObject2_.Object {
@@ -328,10 +342,12 @@ export enum Align {
 }
 
 export interface ListBoxRow extends Widget {
+  set_child(widget: Widget): void;
   set_activatable(activatable: boolean): void;
 }
 
 export interface ScrolledWindow extends Widget {
+  set_min_content_height(height: number): void;
   set_child(child: Widget): void;
 }
 
@@ -364,4 +380,23 @@ export enum License {
   BSD_3_CLAUSE = 7,
   APACHE_2_0 = 8,
   NONE = 9,
+}
+
+export interface Frame extends Widget {
+  set_child(widget: Widget): void;
+}
+
+export interface TreeModel extends GObject2_.Object {
+}
+
+export interface Dialog extends Widget {
+  add_button(text: string, response_type: any): unknown;
+  get_content_area(): Box;
+  set_title(title: string): void;
+  set_default_size(width: number, height: number): void;
+}
+
+export interface Entry extends Widget {
+  get_text(): { valueOf(): string };
+  set_placeholder_text(text: string): void;
 }

@@ -1,4 +1,4 @@
-import type { Callback } from "../mod.ts";
+import type { Callback, PyObject } from "../mod.ts";
 import type { Callback2 } from "./internal_types.ts";
 
 export interface Object extends MyPyObject {
@@ -10,6 +10,6 @@ export interface Object extends MyPyObject {
 export enum GType {
 }
 
-export interface MyPyObject {
+export interface MyPyObject extends PyObject {
   __eq__(other: MyPyObject): { valueOf: () => boolean };
 }

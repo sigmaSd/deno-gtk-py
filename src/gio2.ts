@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import type { Callback, GLib2_, Gtk4_ } from "../mod.ts";
+import type { Callback, GLib2_, GObject2_, Gtk4_ } from "../mod.ts";
 import type { Callback2 } from "./internal_types.ts";
 
 export interface Gio {
@@ -35,8 +35,7 @@ export interface ListStore {
   append(f: Gtk4_.FileFilter): void;
 }
 
-// deno-lint-ignore no-empty-interface
-export interface ListModel {
+export interface ListModel extends GObject2_.Object {
 }
 
 export interface File {
