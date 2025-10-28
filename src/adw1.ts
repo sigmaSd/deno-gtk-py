@@ -59,7 +59,7 @@ export interface ApplicationConstructor extends GObject2_.Object {
   new (kwArg: NamedArgument): Application;
 }
 
-export interface Application extends PyObject {
+export interface Application extends Gio2_.Application {
   send_notification(id: string, notification: Gio2_.Notification): void;
   withdraw_notification(id: string): void;
   set_accels_for_action(detailedActionName: string, accels: [string]): void;
@@ -80,8 +80,6 @@ export interface Application extends PyObject {
   // it should be ApplicaitonWindow
   get_active_window: () => PythonConvertible;
   quit: () => void;
-  register(): void;
-  activate(): void;
 }
 
 export interface PreferencesPage extends Gtk4_.Widget {

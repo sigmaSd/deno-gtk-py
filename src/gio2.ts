@@ -3,6 +3,7 @@ import type { Callback, GLib2_, GObject2_, Gtk4_ } from "../mod.ts";
 import type { Callback2 } from "./internal_types.ts";
 
 export interface Gio {
+  Application: Application;
   Notification: { new: (title: string) => Notification };
   DBusProxyFlags: {
     NONE: DBusProxyFlags.NONE;
@@ -103,4 +104,10 @@ export enum DBusProxyFlags {
 
 export interface Notification {
   set_body(body: string): void;
+}
+
+export interface Application extends GObject2_.Object {
+  register(): void;
+  activate(): void;
+  quit(): void;
 }

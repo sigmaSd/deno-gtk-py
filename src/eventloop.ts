@@ -1,4 +1,4 @@
-import type { GLib2_ } from "../mod.ts";
+import type { Gio2_, GLib2_ } from "../mod.ts";
 
 export interface DenoGLibEventLoopOptions {
   /**
@@ -49,6 +49,7 @@ export class DenoGLibEventLoop {
   private _isRunning = false;
   private readonly mainContext: GLib2_.MainContext;
   private readonly _pollInterval: number;
+  #app?: Gio2_.Application;
 
   constructor(GLib: GLib2_.GLib, options: DenoGLibEventLoopOptions = {}) {
     this._pollInterval = options.pollInterval ?? 1;
@@ -59,10 +60,13 @@ export class DenoGLibEventLoop {
    * Starts the Deno-GLib event loop.
    * This will begin polling GLib events at the specified interval.
    */
-  start(): void {
+  start(app?: Gio2_.Application): void {
     if (this._isRunning) {
       return;
     }
+    this.#app = app;
+    this.#app?.register();
+    this.#app?.activate();
 
     this._isRunning = true;
     this.intervalId = setInterval(() => {
@@ -81,6 +85,7 @@ export class DenoGLibEventLoop {
     if (!this._isRunning || this.intervalId === null) {
       return;
     }
+    this.#app?.quit();
 
     clearInterval(this.intervalId);
     this.intervalId = null;
