@@ -4,7 +4,7 @@ export interface DenoGLibEventLoopOptions {
   /**
    * Poll interval in milliseconds for checking GLib events.
    * Lower values provide better responsiveness but use more CPU.
-   * @default 1
+   * @default 100
    */
   pollInterval?: number;
 }
@@ -52,7 +52,7 @@ export class DenoGLibEventLoop {
   #app?: Gio2_.Application;
 
   constructor(GLib: GLib2_.GLib, options: DenoGLibEventLoopOptions = {}) {
-    this._pollInterval = options.pollInterval ?? 1;
+    this._pollInterval = options.pollInterval ?? 100;
     this.mainContext = GLib.MainContext.default();
   }
 
