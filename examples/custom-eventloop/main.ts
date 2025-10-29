@@ -70,13 +70,11 @@ class App extends Adw.Application {
 const app = new App(kw`application_id=${"com.example.custom-eventloop"}`);
 
 // Instead of using app.run(Deno.args) which blocks Deno's event loop,
-// we use app.register() + app.activate() with a custom event loop
-app.register();
-app.activate();
+// we use a custom event loop
 
 // Create and start the Deno-GLib event loop
-const eventLoop = new DenoGLibEventLoop(GLib, { pollInterval: 1 });
-eventLoop.start();
+const eventLoop = new DenoGLibEventLoop(GLib);
+eventLoop.start(app);
 
 // Now Deno's event loop is not blocked, so we can use setTimeout, setInterval, etc.
 console.log("Application started with Deno-GLib event loop integration");
