@@ -4,7 +4,6 @@ import type {
   GObject2_,
   Gtk4_,
   NamedArgument,
-  PyObject,
   PythonConvertible,
 } from "../mod.ts";
 import type { Callback2 } from "./internal_types.ts";

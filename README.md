@@ -8,6 +8,8 @@ Wrapper + types over Gtk using deno-python
 #!/usr/bin/env -S deno run --allow-ffi --allow-env=DENO_PYTHON_PATH --unstable-ffi
 import {
   type Adw1_ as Adw_,
+  DenoGLibEventLoop,
+  type GLib2_ as GLib_,
   type Gtk4_ as Gtk_,
   kw,
   NamedArgument,
@@ -19,6 +21,7 @@ gi.require_version("Gtk", "4.0");
 gi.require_version("Adw", "1");
 const Gtk: Gtk_.Gtk = python.import("gi.repository.Gtk");
 const Adw: Adw_.Adw = python.import("gi.repository.Adw");
+const GLib: GLib_.GLib = python.import("gi.repository.GLib");
 
 class MainWindow extends Gtk.ApplicationWindow {
   #button;
@@ -33,10 +36,7 @@ class MainWindow extends Gtk.ApplicationWindow {
           //@ts-ignore it is a window
           new NamedArgument("transient_for", this),
           new NamedArgument("heading", "Deno GTK PY"),
-          new NamedArgument(
-            "body",
-            "Hello World",
-          ),
+          new NamedArgument("body", "Hello World"),
         ).present();
       }),
     );
@@ -57,7 +57,11 @@ class App extends Adw.Application {
 }
 
 const app = new App(kw`application_id=${"com.example.com"}`);
-app.run(Deno.args);
+
+// Use DenoGLibEventLoop to keep Deno's event loop running
+// This allows setTimeout, fetch, and other Deno APIs to work normally
+const eventLoop = new DenoGLibEventLoop(GLib);
+await eventLoop.start(app);
 ```
 
 Check out the examples directory
@@ -66,15 +70,13 @@ Check out the examples directory
 
 ## Tips
 
-- Gtk have its own loop, somethings that you expect to work might not do to
-  this, for example `setTimeout` wont work in a python.callback after running
-  Gtk.Applicaiton. The solution is to use the primitives that GLib provides, for
-  example instead of `setTimeout`, use `GLib.add_timeout`
-- **Alternative**: Use the `DenoGLibEventLoop` class to integrate GLib's event
-  loop with Deno's event loop without blocking. This allows you to use
-  `setTimeout`, `fetch`, and other Deno APIs normally. Instead of `app.run()`,
-  use `app.register()` + `app.activate()` with the event loop integration.
-- For running async subprocess checkout `Gio.Subprocess`
+- The `DenoGLibEventLoop` is the recommended way to run GTK apps. It integrates
+  GLib's event loop with Deno's, allowing `setTimeout`, `fetch`, and other Deno
+  APIs to work normally alongside your GTK UI.
+- **Alternative**: Use `app.run(Deno.args)` for the traditional blocking GTK
+  event loop. Note that Deno APIs like `setTimeout` won't work in this mode.
+  You'll need to use GLib primitives like `GLib.timeout_add` instead.
+- For running async subprocesses, check out `Gio.Subprocess`
 
 ## Random apps made with it
 
