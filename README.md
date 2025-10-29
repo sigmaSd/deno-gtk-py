@@ -1,16 +1,16 @@
-# Deno Gtk Py
+# JS Gtk Py
 
-Wrapper + types over Gtk using deno-python
+Wrapper + types over Gtk using javascript python bindings
 
 ## Usage
 
 ```ts
-#!/usr/bin/env -S deno run --allow-ffi --allow-env=DENO_PYTHON_PATH --unstable-ffi
+#!/usr/bin/env -S JS -A
 import {
   type Adw1_ as Adw_,
-  DenoGLibEventLoop,
   type GLib2_ as GLib_,
   type Gtk4_ as Gtk_,
+  JSGLibEventLoop,
   kw,
   NamedArgument,
   python,
@@ -22,22 +22,31 @@ gi.require_version("Adw", "1");
 const Gtk: Gtk_.Gtk = python.import("gi.repository.Gtk");
 const Adw: Adw_.Adw = python.import("gi.repository.Adw");
 const GLib: GLib_.GLib = python.import("gi.repository.GLib");
+// Use JSGLibEventLoop to keep JS's event loop running
+// This allows setTimeout, fetch, and other JS APIs to work normally
+const eventLoop = new JSGLibEventLoop(GLib);
 
 class MainWindow extends Gtk.ApplicationWindow {
   #button;
   constructor(kwArg: NamedArgument) {
     super(kwArg);
     this.set_title("Demo");
+    this.connect("close-request", () => {
+      eventLoop.stop();
+    });
     this.#button = Gtk.Button(kw`label=${"Click Me"}`);
     this.#button.connect(
       "clicked",
       python.callback(() => {
-        Adw.MessageDialog(
-          //@ts-ignore it is a window
+        const dialog = Adw.MessageDialog(
           new NamedArgument("transient_for", this),
-          new NamedArgument("heading", "Deno GTK PY"),
+          new NamedArgument("heading", "JS GTK PY"),
           new NamedArgument("body", "Hello World"),
-        ).present();
+        );
+        dialog.present();
+        setTimeout(() => {
+          dialog.close();
+        }, 1000);
       }),
     );
     this.set_child(this.#button);
@@ -58,9 +67,6 @@ class App extends Adw.Application {
 
 const app = new App(kw`application_id=${"com.example.com"}`);
 
-// Use DenoGLibEventLoop to keep Deno's event loop running
-// This allows setTimeout, fetch, and other Deno APIs to work normally
-const eventLoop = new DenoGLibEventLoop(GLib);
 await eventLoop.start(app);
 ```
 
@@ -70,12 +76,12 @@ Check out the examples directory
 
 ## Tips
 
-- The `DenoGLibEventLoop` is the recommended way to run GTK apps. It integrates
-  GLib's event loop with Deno's, allowing `setTimeout`, `fetch`, and other Deno
+- The `JSGLibEventLoop` is the recommended way to run GTK apps. It integrates
+  GLib's event loop with Javascript, allowing `setTimeout`, `fetch`, and other
   APIs to work normally alongside your GTK UI.
-- **Alternative**: Use `app.run(Deno.args)` for the traditional blocking GTK
-  event loop. Note that Deno APIs like `setTimeout` won't work in this mode.
-  You'll need to use GLib primitives like `GLib.timeout_add` instead.
+- **Alternative**: Use `app.run()` for the traditional blocking GTK event loop.
+  Note that javascript APIs like `setTimeout` won't work in this mode. You'll
+  need to use GLib primitives like `GLib.timeout_add` instead.
 - For running async subprocesses, check out `Gio.Subprocess`
 
 ## Random apps made with it

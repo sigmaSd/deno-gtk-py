@@ -108,6 +108,7 @@ export interface CssProvider {
   load_from_data(data: string): void;
 }
 export interface Window extends Widget {
+  close: () => void;
   hide: () => void;
   present: () => void;
   set_transient_for(parent: ApplicationWindow): void;

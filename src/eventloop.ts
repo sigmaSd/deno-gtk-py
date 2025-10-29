@@ -1,6 +1,6 @@
 import type { Gio2_, GLib2_ } from "../mod.ts";
 
-export interface DenoGLibEventLoopOptions {
+export interface JSGLibEventLoopOptions {
   /**
    * Maximum sleep interval in milliseconds when no events are pending.
    * When events are actively being processed, the loop will check again
@@ -11,9 +11,9 @@ export interface DenoGLibEventLoopOptions {
 }
 
 /**
- * Event loop that integrates GLib's MainContext with Deno's event loop.
+ * Event loop that integrates GLib's MainContext with Javascript's event loop.
  *
- * By default, using `app.run()` blocks Deno's event loop because GLib's MainContext
+ * By default, using `app.run()` blocks Javascript's event loop because GLib's MainContext
  * takes control of the main thread. This event loop provides a workaround by
  * intelligently processing GLib events: using microtasks for immediate response
  * when events are flowing, and sleeping to conserve CPU when idle.
@@ -23,7 +23,7 @@ export interface DenoGLibEventLoopOptions {
  *
  * @example
  * ```ts
- * import { python, DenoGLibEventLoop } from "jsr:@sigma/gtk-py";
+ * import { python, JSGLibEventLoop } from "jsr:@sigma/gtk-py";
  *
  * const gi = python.import("gi");
  * gi.require_version("Gtk", "4.0");
@@ -33,11 +33,9 @@ export interface DenoGLibEventLoopOptions {
  * const app = new Gtk.Application({ application_id: "com.example.App" });
  *
  * // Instead of app.run(Deno.args), use:
- * app.register();
- * app.activate();
  *
- * const eventLoop = new DenoGLibEventLoop(GLib, { pollInterval: 16 });
- * await eventLoop.start();
+ * const eventLoop = new JSGLibEventLoop(GLib, { pollInterval: 16 });
+ * await eventLoop.start(app);
  *
  * // Your Deno code continues to work normally
  * setTimeout(() => {
@@ -45,19 +43,19 @@ export interface DenoGLibEventLoopOptions {
  * }, 1000);
  * ```
  */
-export class DenoGLibEventLoop {
+export class JSGLibEventLoop {
   private _isRunning = false;
   private readonly mainContext: GLib2_.MainContext;
   private readonly _pollInterval: number;
   #app?: Gio2_.Application;
 
-  constructor(GLib: GLib2_.GLib, options: DenoGLibEventLoopOptions = {}) {
+  constructor(GLib: GLib2_.GLib, options: JSGLibEventLoopOptions = {}) {
     this._pollInterval = options.pollInterval ?? 16;
     this.mainContext = GLib.MainContext.default();
   }
 
   /**
-   * Starts the Deno-GLib event loop.
+   * Starts the JS-GLib event loop.
    * Uses a hybrid approach: sub-millisecond latency when events are active,
    * and sleeps when idle to conserve CPU.
    */
@@ -96,7 +94,7 @@ export class DenoGLibEventLoop {
   }
 
   /**
-   * Stops the Deno-GLib event loop.
+   * Stops the JS-GLib event loop.
    * This will stop processing GLib events and exit the event loop.
    */
   stop(): void {

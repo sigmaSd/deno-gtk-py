@@ -2,9 +2,9 @@
 
 import {
   type Adw1_ as Adw_,
-  DenoGLibEventLoop,
   type GLib2_ as GLib_,
   type Gtk4_ as Gtk_,
+  JSGLibEventLoop,
   kw,
   NamedArgument,
   python,
@@ -72,8 +72,8 @@ const app = new App(kw`application_id=${"com.example.custom-eventloop"}`);
 // Instead of using app.run(Deno.args) which blocks Deno's event loop,
 // we use a custom event loop
 
-// Create and start the Deno-GLib event loop
-const eventLoop = new DenoGLibEventLoop(GLib);
+// Create and start the JS-GLib event loop
+const eventLoop = new JSGLibEventLoop(GLib);
 eventLoop.start(app);
 
 // Now Deno's event loop is not blocked, so we can use setTimeout, setInterval, etc.
