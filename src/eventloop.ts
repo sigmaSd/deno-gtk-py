@@ -85,7 +85,9 @@ export class DenoGLibEventLoop {
       if (hadEvents) {
         // Events were processed - check again immediately with minimal delay
         // This gives sub-millisecond response time during active periods
-        await new Promise((resolve) => queueMicrotask(resolve));
+        await new Promise((resolve) =>
+          queueMicrotask(() => resolve(undefined))
+        );
       } else {
         // No events - sleep for the full interval to save CPU
         await new Promise((resolve) => setTimeout(resolve, this._pollInterval));

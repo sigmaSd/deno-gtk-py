@@ -1,6 +1,6 @@
 {
   "name": "@sigma/gtk-py",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "exports": "./mod.ts",
   "tasks": {
     "run": "deno run -A",
