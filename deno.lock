@@ -3,7 +3,6 @@
   "specifiers": {
     "jsr:@david/dax@0.41.0": "0.41.0",
     "jsr:@david/which@~0.4.1": "0.4.1",
-    "jsr:@denosaurs/python@0.4.6": "0.4.6",
     "jsr:@std/assert@0.221": "0.221.0",
     "jsr:@std/bytes@0.221": "0.221.0",
     "jsr:@std/fmt@0.221": "0.221.0",
@@ -28,9 +27,6 @@
     },
     "@david/which@0.4.1": {
       "integrity": "896a682b111f92ab866cc70c5b4afab2f5899d2f9bde31ed00203b9c250f225e"
-    },
-    "@denosaurs/python@0.4.6": {
-      "integrity": "040ca5d73abbadc4baf41606420a8b32856469ad7889e9c9f3b105f8d0ac1924"
     },
     "@std/assert@0.221.0": {
       "integrity": "a5f1aa6e7909dbea271754fd4ab3f4e687aeff4873b4cef9a320af813adb489a"
@@ -252,11 +248,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@denosaurs/python@0.4.6"
-    ],
-    "links": {
-      "jsr:@denosaurs/python@0.4.6": {},
-      "npm:bunpy@0.4.6": {}
-    }
+      "jsr:@sigma/python@0.4.9"
+    ]
   }
 }
