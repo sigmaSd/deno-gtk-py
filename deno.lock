@@ -253,6 +253,10 @@
   "workspace": {
     "dependencies": [
       "jsr:@denosaurs/python@0.4.6"
-    ]
+    ],
+    "links": {
+      "jsr:@denosaurs/python@0.4.6": {},
+      "npm:bunpy@0.4.6": {}
+    }
   }
 }

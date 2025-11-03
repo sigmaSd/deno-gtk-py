@@ -9,6 +9,6 @@
     "example:builder": "deno task run examples/builder/main.ts"
   },
   "imports": {
-    "@denosaurs/python": "jsr:@denosaurs/python@0.4.6"
+    "@denosaurs/python": "jsr:@sigma/python@0.4.9"
   }
 }
